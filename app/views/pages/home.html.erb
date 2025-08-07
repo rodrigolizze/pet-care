@@ -1,20 +1,32 @@
-<h1>Todos os Usuários</h1>
+<h1>Busca de Pet Sitters</h1>
 
-<% @sitters.each do |sitter| %>
-  <div style="border: 1px solid #ccc; padding: 10px; margin-bottom: 10px;">
-    <p><strong>Nome:</strong> <%= sitter.name %></p>
-    <p><strong>Endereço:</strong> <%= sitter.address %></p>
-    <p><strong>Email:</strong> <%= sitter.email %></p>
+<%= form_with url: root_path, method: :get, local: true do |form| %>
+  <%= form.label :city, "Cidade" %><br>
+  <%= form.text_field :city, value: params[:city] %><br><br>
 
-    <p><strong>Disponibilidades:</strong></p>
-    <% if sitter.availabilities.any? %>
+  <%= form.label :date, "Data de Disponibilidade" %><br>
+  <%= form.date_field :date, value: params[:date] %><br><br>
+
+  <%= form.submit "Buscar" %>
+<% end %>
+
+<hr>
+
+<% if @sitters.present? && @sitters.any? %>
+  <% @sitters.each do |sitter| %>
+    <div>
+      <p><strong>Nome:</strong> <%= sitter.name %></p>
+      <p><strong>Endereço:</strong> <%= sitter.address %></p>
+      <p><strong>Email:</strong> <%= sitter.email %></p>
+      <p><strong>Disponibilidades:</strong></p>
       <ul>
         <% sitter.availabilities.each do |availability| %>
           <li><%= availability.date.strftime("%d/%m/%Y") %></li>
         <% end %>
       </ul>
-    <% else %>
-      <p>Sem disponibilidade cadastrada.</p>
-    <% end %>
-  </div>
+    </div>
+    <hr>
+  <% end %>
+<% else %>
+  <p>Nenhum sitter encontrado</p>
 <% end %>
