@@ -1,2 +1,20 @@
-<h1>Pages#home</h1>
-<p>Find me in app/views/pages/home.html.erb</p>
+<h1>Todos os Usuários</h1>
+
+<% @sitters.each do |sitter| %>
+  <div style="border: 1px solid #ccc; padding: 10px; margin-bottom: 10px;">
+    <p><strong>Nome:</strong> <%= sitter.name %></p>
+    <p><strong>Endereço:</strong> <%= sitter.address %></p>
+    <p><strong>Email:</strong> <%= sitter.email %></p>
+
+    <p><strong>Disponibilidades:</strong></p>
+    <% if sitter.availabilities.any? %>
+      <ul>
+        <% sitter.availabilities.each do |availability| %>
+          <li><%= availability.date.strftime("%d/%m/%Y") %></li>
+        <% end %>
+      </ul>
+    <% else %>
+      <p>Sem disponibilidade cadastrada.</p>
+    <% end %>
+  </div>
+<% end %>
