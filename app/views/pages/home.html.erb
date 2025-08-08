@@ -1,11 +1,11 @@
 <div class="container mt-4">
   <div class="row justify-content-center">
     <div class="col-lg-10">
-      <h1 class="mb-4 text-center">Busca de Pet Sitters</h1>
+      <h1 class="mb-4 text-center">Encontre um Pet Sitter</h1>
 
         <%= simple_form_for :search, url: root_path, method: :get, html: { class: 'row g-2 align-items-end' } do |f| %>
           <div class="col-md-3">
-            <%= f.input :city, label: false, placeholder: "Cidade", wrapper: false, input_html: { value: params.dig(:search, :city), class: 'form-control' } %>
+            <%= f.input :city, label: false, placeholder: "Onde o seu pet ficará?", wrapper: false, input_html: { value: params.dig(:search, :city), class: 'form-control' } %>
           </div>
 
           <div class="col-md-2">
