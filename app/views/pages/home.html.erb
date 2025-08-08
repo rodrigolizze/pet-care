@@ -5,8 +5,11 @@
   <%= form.label :city, "Cidade" %><br>
   <%= form.text_field :city, value: params[:city] %><br><br>
 
-  <%= form.label :date, "Data de Disponibilidade" %><br>
-  <%= form.date_field :date, value: params[:date] %><br><br>
+  <%= form.label :start_date, "Disponível a partir de" %><br>
+  <%= form.date_field :start_date, value: params[:start_date] %><br><br>
+
+  <%= form.label :end_date, "Disponível até" %><br>
+  <%= form.date_field :end_date, value: params[:end_date] %><br><br>
 
   <%= form.submit "Buscar" %>
 <% end %>
