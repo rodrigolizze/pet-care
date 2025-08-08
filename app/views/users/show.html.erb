@@ -1,0 +1,19 @@
+<h1>Perfil de <%= @user.name %></h1>
+
+<p><strong>Endereço:</strong> <%= @user.address %></p>
+<p><strong>Email:</strong> <%= @user.email %></p>
+
+<h2>Datas disponíveis</h2>
+
+<% if @availabilities.any? %>
+  <ul>
+    <% @availabilities.each do |availability| %>
+      <li>
+        <%= availability.date.strftime("%d/%m/%Y") %>
+        <%= link_to "Reservar", new_availability_booking_path(availability), class: "btn btn-sm btn-primary" %>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>Este cuidador não possui datas disponíveis.</p>
+<% end %>

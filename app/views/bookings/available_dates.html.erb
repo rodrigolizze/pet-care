@@ -1,0 +1,21 @@
+<h1>Disponibilidades de Cuidadores</h1>
+
+<h1>Datas Disponíveis</h1>
+<table>
+  <tr>
+    <th>Data</th>
+    <th>Cuidador</th>
+    <th></th> <!-- column for the profile button -->
+  </tr>
+  <% @availabilities.each do |availability| %>
+    <tr>
+      <td><%= l(availability.date, format: :long) %></td>
+      <td><%= availability.user.name %></td>
+      <td>
+        <%= link_to "Ver Perfil",
+                    user_path(availability.user),
+                    class: "btn btn-secondary" %>
+      </td>
+    </tr>
+  <% end %>
+</table>

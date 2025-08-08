@@ -24,6 +24,7 @@
           <li><%= availability.date.strftime("%d/%m/%Y") %></li>
         <% end %>
       </ul>
+      <p><strong>Nome:</strong> <%= link_to sitter.name, user_path(sitter) %></p>
     </div>
     <hr>
   <% end %>
