@@ -14,7 +14,7 @@ class BookingsController < ApplicationController
     @booking.availability = @availability
 
     if @booking.save
-      redirect_to root_path, notice: "Reserva criada com sucesso!"
+      redirect_to user_path(@availability.user), notice: "Reserva criada com sucesso!"
     else
       render :new
     end
