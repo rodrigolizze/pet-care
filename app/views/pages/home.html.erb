@@ -1,37 +1,48 @@
-<div class=container>
-<h1>Busca de Pet Sitters</h1>
+<div class="container mt-4">
+  <div class="row justify-content-center">
+    <div class="col-lg-10">
+      <h1 class="mb-4 text-center">Busca de Pet Sitters</h1>
 
-<%= form_with url: root_path, method: :get, local: true do |form| %>
-  <%= form.label :city, "Cidade" %><br>
-  <%= form.text_field :city, value: params[:city] %><br><br>
+        <%= simple_form_for :search, url: root_path, method: :get, html: { class: 'row g-2 align-items-end' } do |f| %>
+          <div class="col-md-3">
+            <%= f.input :city, label: false, placeholder: "Cidade", wrapper: false, input_html: { value: params.dig(:search, :city), class: 'form-control' } %>
+          </div>
 
-  <%= form.label :start_date, "Disponível a partir de" %><br>
-  <%= form.date_field :start_date, value: params[:start_date] %><br><br>
+          <div class="col-md-2">
+            <%= f.input :start_date, label: false, wrapper: false, placeholder: "Check-in", input_html: { type: 'date', value: params.dig(:search, :start_date), class: 'form-control' } %>
+          </div>
 
-  <%= form.label :end_date, "Disponível até" %><br>
-  <%= form.date_field :end_date, value: params[:end_date] %><br><br>
+          <div class="col-md-2">
+            <%= f.input :end_date, label: false, wrapper: false, placeholder: "Check-out", input_html: { type: 'date', value: params.dig(:search, :end_date), class: 'form-control' } %>
+          </div>
 
-  <%= form.submit "Buscar" %>
-<% end %>
-
-<hr>
-
-<% if @sitters.present? && @sitters.any? %>
-  <% @sitters.each do |sitter| %>
-    <div>
-      <p><strong>Nome:</strong> <%= link_to sitter.name, user_path(sitter) %></p>
-      <p><strong>Endereço:</strong> <%= sitter.address %></p>
-      <p><strong>Email:</strong> <%= sitter.email %></p>
-      <p><strong>Disponibilidades:</strong></p>
-      <ul>
-        <% sitter.availabilities.each do |availability| %>
-          <li><%= availability.date.strftime("%d/%m/%Y") %></li>
+          <div class="col-md-2">
+            <div class="d-grid h-100">
+              <%= f.button :submit, "Buscar", class: "btn btn-primary h-100" %>
+            </div>
+          </div>
         <% end %>
-      </ul>
+
+      <hr>
+
+      <% if @sitters.present? && @sitters.any? %>
+        <% @sitters.each do |sitter| %>
+          <div>
+            <p><strong>Nome:</strong> <%= link_to sitter.name, user_path(sitter) %></p>
+            <p><strong>Endereço:</strong> <%= sitter.address %></p>
+            <p><strong>Email:</strong> <%= sitter.email %></p>
+            <p><strong>Disponibilidades:</strong></p>
+            <ul>
+              <% sitter.availabilities.each do |availability| %>
+                <li><%= availability.date.strftime("%d/%m/%Y") %></li>
+              <% end %>
+            </ul>
+          </div>
+          <hr>
+        <% end %>
+      <% else %>
+        <p>Nenhum sitter encontrado</p>
+      <% end %>
     </div>
-    <hr>
-  <% end %>
-<% else %>
-  <p>Nenhum sitter encontrado</p>
-<% end %>
+  </div>
 </div>
