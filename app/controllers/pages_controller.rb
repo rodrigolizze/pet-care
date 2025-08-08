@@ -1,31 +1,33 @@
 class PagesController < ApplicationController
   def home
-    @city = params[:city]
-    @start_date = params[:start_date]
-    @end_date = params[:end_date]
+  search_params = params[:search] || {}
 
-    sitters = User.where(role: "sitter")
-    sitters = sitters.where("address ILIKE ?", "%#{@city}%") if @city.present?
+  @city = search_params[:city]
+  @start_date = search_params[:start_date]
+  @end_date = search_params[:end_date]
 
-    if @start_date.present? && @end_date.present?
-      begin
-        start_date = Date.parse(@start_date)
-        end_date = Date.parse(@end_date)
-        requested_dates = (start_date..end_date).to_a
+  sitters = User.where(role: "sitter")
+  sitters = sitters.where("address ILIKE ?", "%#{@city}%") if @city.present?
 
-        sitter_ids = User
-          .joins(:availabilities)
-          .where(role: "sitter", availabilities: { date: requested_dates })
-          .group("users.id")
-          .having("COUNT(DISTINCT availabilities.date) = ?", requested_dates.count)
-          .pluck(:id)
+  if @start_date.present? && @end_date.present?
+    begin
+      start_date = Date.parse(@start_date)
+      end_date = Date.parse(@end_date)
+      requested_dates = (start_date..end_date).to_a
 
-        sitters = sitters.where(id: sitter_ids)
-      rescue ArgumentError
-        # Datas inválidas — ignorar ou tratar
-      end
+      sitter_ids = User
+        .joins(:availabilities)
+        .where(role: "sitter", availabilities: { date: requested_dates })
+        .group("users.id")
+        .having("COUNT(DISTINCT availabilities.date) = ?", requested_dates.count)
+        .pluck(:id)
+
+      sitters = sitters.where(id: sitter_ids)
+    rescue ArgumentError
+      # Datas inválidas — ignorar ou tratar
     end
+  end
 
-    @sitters = sitters.includes(:availabilities)
+  @sitters = sitters.includes(:availabilities)
   end
 end
