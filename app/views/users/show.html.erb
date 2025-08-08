@@ -10,7 +10,11 @@
     <% @availabilities.each do |availability| %>
       <li>
         <%= availability.date.strftime("%d/%m/%Y") %>
-        <%= link_to "Reservar", new_availability_booking_path(availability), class: "btn btn-sm btn-primary" %>
+        <% if availability.bookings.none? %>
+          <%= link_to "Reservar", new_availability_booking_path(availability), class: "btn btn-sm btn-primary" %>
+        <% else %>
+          <span class="text-muted">Já reservado</span>
+        <% end %>
       </li>
     <% end %>
   </ul>

@@ -1,6 +1,16 @@
-<h1>Reservar Cuidador para <%= @availability.date.strftime("%d/%m/%Y") %></h1>
+<h1>Reservar para <%= @availability.date.strftime("%d/%m/%Y") %></h1>
 
 <%= form_with model: [@availability, @booking], local: true do |form| %>
+  <% if @booking.errors.any? %>
+    <div class="alert alert-danger">
+      <ul>
+        <% @booking.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
   <div class="form-group">
     <%= form.label :pet_name, "Nome do Pet" %>
     <%= form.text_field :pet_name, class: "form-control" %>
@@ -8,12 +18,12 @@
 
   <div class="form-group">
     <%= form.label :animal_type, "Tipo de Animal" %>
-    <%= form.select :animal_type, ["dog", "cat", "rabbit", "bird"], {}, class: "form-control" %>
+    <%= form.select :animal_type, ["Cachorro", "Gato", "Coelho", "Pássaro"], {}, class: "form-control" %>
   </div>
 
   <div class="form-group">
     <%= form.label :pet_size, "Tamanho" %>
-    <%= form.select :pet_size, ["small", "medium", "large"], {}, class: "form-control" %>
+    <%= form.select :pet_size, ["Pequeno", "Médio", "Grande"], {}, class: "form-control" %>
   </div>
 
   <div class="form-group">
@@ -21,5 +31,5 @@
     <%= form.number_field :pet_birth_year, in: 2000..Date.today.year, class: "form-control" %>
   </div>
 
-  <%= form.submit "Confirmar Reserva", class: "btn btn-success" %>
+  <%= form.submit "Confirmar Reserva", class: "btn btn-success mt-2" %>
 <% end %>
