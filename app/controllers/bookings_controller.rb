@@ -1,7 +1,6 @@
 class BookingsController < ApplicationController
-
   before_action :authenticate_user!
-  before_action :require_client
+  # before_action :require_client
 
   def new
     @availability = Availability.find(params[:availability_id])
@@ -14,20 +13,27 @@ class BookingsController < ApplicationController
     @booking.user = current_user
     @booking.availability = @availability
 
-    if booking.save
-      redirect_to rooth_path, notice: "Reserva criada com sucesso!"
+    if @booking.save
+      redirect_to root_path, notice: "Reserva criada com sucesso!"
     else
       render :new
     end
   end
 
+  def available_dates
+    @availabilities = Availability
+                        .includes(:user)
+                        .where("date >= ?", Date.today)
+                        .order(:date)
+  end
+
   private
 
-  def boooking_params
+  def booking_params
     params.require(:booking).permit(:pet_name, :animal_type, :pet_size, :pet_birth_year)
   end
 
   def require_client
-    redirect_to rooth_path, alert: "Acesso restrito." unless current_user.client?
+    redirect_to root_path, alert: "Acesso restrito." unless current_user.client?
   end
 end

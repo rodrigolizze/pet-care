@@ -1,0 +1,25 @@
+<h1>Reservar Cuidador para <%= @availability.date.strftime("%d/%m/%Y") %></h1>
+
+<%= form_with model: [@availability, @booking], local: true do |form| %>
+  <div class="form-group">
+    <%= form.label :pet_name, "Nome do Pet" %>
+    <%= form.text_field :pet_name, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :animal_type, "Tipo de Animal" %>
+    <%= form.select :animal_type, ["dog", "cat", "rabbit", "bird"], {}, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :pet_size, "Tamanho" %>
+    <%= form.select :pet_size, ["small", "medium", "large"], {}, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :pet_birth_year, "Ano de Nascimento" %>
+    <%= form.number_field :pet_birth_year, in: 2000..Date.today.year, class: "form-control" %>
+  </div>
+
+  <%= form.submit "Confirmar Reserva", class: "btn btn-success" %>
+<% end %>
