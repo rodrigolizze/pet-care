@@ -16,7 +16,7 @@
 <% if @sitters.present? && @sitters.any? %>
   <% @sitters.each do |sitter| %>
     <div>
-      <p><strong>Nome:</strong> <%= sitter.name %></p>
+      <p><strong>Nome:</strong> <%= link_to sitter.name, user_path(sitter) %></p>
       <p><strong>Endereço:</strong> <%= sitter.address %></p>
       <p><strong>Email:</strong> <%= sitter.email %></p>
       <p><strong>Disponibilidades:</strong></p>
@@ -25,7 +25,6 @@
           <li><%= availability.date.strftime("%d/%m/%Y") %></li>
         <% end %>
       </ul>
-      <p><strong>Nome:</strong> <%= link_to sitter.name, user_path(sitter) %></p>
     </div>
     <hr>
   <% end %>
