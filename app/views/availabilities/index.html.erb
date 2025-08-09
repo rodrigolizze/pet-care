@@ -2,6 +2,13 @@
 
 <%= link_to "Nova disponibilidade", new_availability_path, class: "btn btn-primary" %>
 
+<% if notice.present? %>
+  <p class="alert alert-success"><%= notice %></p>
+<% end %>
+<% if alert.present? %>
+  <p class="alert alert-danger"><%= alert %></p>
+<% end %>
+
 <table>
   <thead>
     <tr>
@@ -14,8 +21,17 @@
     <% @availabilities.each do |availability| %>
       <tr>
         <td><%= availability.date.strftime("%d/%m/%Y") %></td>
+        <td><%= availability.created_at.strftime("%d/%m/%Y %H:%M") %></td>
         <td>
-          <%= button_to "Excluir", availability_path(availability), method: :delete, data: { confirm: "Tem certeza?" }, class: "btn btn-danger btn-sm" %>
+          <% if availability.booking.present? %>
+            <span class="badge bg-secondary">Reservado</span>
+          <% else %>
+            <%= button_to "Excluir",
+                  availability_path(availability),
+                  method: :delete,
+                  data: { confirm: "Tem certeza?" },
+                  class: "btn btn-danger btn-sm" %>
+          <% end %>
         </td>
       </tr>
     <% end %>

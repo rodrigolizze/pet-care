@@ -1,23 +1,23 @@
 <div class="container mt-4">
-  <div class="row justify-content-center">
-    <div class="col-lg-10">
+  <div class="d-flex flex-wrap justify-content-center gap-3">
+    <% if @sitters.present? && @sitters.any? %>
+      <% @sitters.each do |sitter| %>
+        <div class="sitter-card p-3 rounded shadow" style="width: 300px; height: 300px; overflow: hidden;">
+          <%= link_to user_path(sitter) do %>
+            <%= cl_image_tag("c5ldsjbxtnqcwksfgsn0",
+                  crop: :thumb, gravity: :face,
+                  class: "img-fluid rounded mb-2",
+                  html: { style: "width: 100%; height: 100%; object-fit: cover;" }) %>
+          <% end %>
 
-<% if @sitters.present? && @sitters.any? %>
-  <% @sitters.each do |sitter| %>
-    <div>
-      <p><strong>Nome:</strong> <%= link_to sitter.name, user_path(sitter) %></p>
-      <p><strong>Endereço:</strong> <%= sitter.address %></p>
-      <p><strong>Email:</strong> <%= sitter.email %></p>
-      <p><strong>Disponibilidades:</strong></p>
-      <ul>
-        <% sitter.availabilities.each do |availability| %>
-          <li><%= availability.date.strftime("%d/%m/%Y") %></li>
-        <% end %>
-      </ul>
-    </div>
-    <hr>
-  <% end %>
-<% else %>
-  <p>Nenhum sitter encontrado</p>
-<% end %>
+          <div class="info" style="position: relative; margin-top: 10px;">
+            <p><%= sitter.name %></p>
+            <p><%= sitter.address %></p>
+          </div>
+        </div>
+      <% end %>
+    <% else %>
+      <p>Nenhum sitter encontrado</p>
+    <% end %>
+  </div>
 </div>
