@@ -27,14 +27,14 @@
                         class: "form-control" } %>
           <%= f.input :email,
                       required: true,
-                      input_html: { autocomplete: "email" }%>  
+                      input_html: { autocomplete: "email" }%>
+          <%= f.input :telephone,
+                      required: true,
+                      autofocus: true,
+                      input_html: { autocomplete: "telephone" }%>  
           <%= f.input :address,
                       required: true,
                       input_html: { autocomplete: "address" }%>
-          <%= f.input :role,
-                      as: :select,
-                      collection: [['Client', 'client'], ['Sitter', 'sitter']],
-                      prompt: "Select a role" %>
           <%= f.input :password,
                       required: true,
                       hint: ("#{@minimum_password_length} characters minimum" if @minimum_password_length),

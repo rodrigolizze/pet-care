@@ -11,4 +11,15 @@
       <li><%= availability.date %> — <%= link_to "Delete", availability_path(availability), data: { turbo_method: :delete }, class: "text-danger" %></li>
     <% end %>
   </ul>
+
+    <h1>Sitter Dashboard</h1>
+
+  <p>Welcome, <%= current_user.name %>!</p>
+
+  <hr>
+
+  <h2>About Me</h2>
+  <p><strong>Bio:</strong> <%= current_user.bio.presence || "No bio provided." %></p>
+  <p><strong>Experience:</strong> <%= current_user.experience.presence || "No experience details provided." %></p>
+
 </div>
