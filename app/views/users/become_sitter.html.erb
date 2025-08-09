@@ -1,0 +1,20 @@
+<div class="container">
+  <h1>Become a Sitter</h1>
+
+  <%= form_with model: current_user, url: become_sitter_users_path, method: :post do |f| %>
+    <div class="mb-3">
+      <%= f.label :bio %>
+      <%= f.text_area :bio, class: "form-control" %>
+    </div>
+
+    <div class="mb-3">
+      <%= f.label :experience %>
+      <%= f.text_area :experience, class: "form-control" %>
+    </div>
+
+    <%= f.submit "Become a sitter", class: "btn btn-primary" %>
+  <% end %>
+</div>
+
+
+

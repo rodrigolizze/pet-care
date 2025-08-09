@@ -1,0 +1,14 @@
+
+<div class="container">
+  <h1>Sitter Dashboard</h1>
+
+  <p>Welcome, <%= current_user.name %>! Here you can set your availability.</p>
+
+  <%= link_to "Add new availability", new_availability_path, class: "btn btn-primary" %>
+
+  <ul>
+    <% @availabilities.each do |availability| %>
+      <li><%= availability.date %> — <%= link_to "Delete", availability_path(availability), data: { turbo_method: :delete }, class: "text-danger" %></li>
+    <% end %>
+  </ul>
+</div>
