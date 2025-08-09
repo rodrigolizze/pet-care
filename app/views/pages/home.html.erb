@@ -25,24 +25,22 @@
 
       <hr>
 
-      <% if @sitters.present? && @sitters.any? %>
-        <% @sitters.each do |sitter| %>
-          <div>
-            <p><strong>Nome:</strong> <%= link_to sitter.name, user_path(sitter) %></p>
-            <p><strong>Endereço:</strong> <%= sitter.address %></p>
-            <p><strong>Email:</strong> <%= sitter.email %></p>
-            <p><strong>Disponibilidades:</strong></p>
-            <ul>
-              <% sitter.availabilities.each do |availability| %>
-                <li><%= availability.date.strftime("%d/%m/%Y") %></li>
-              <% end %>
-            </ul>
-          </div>
-          <hr>
+<% if @sitters.present? && @sitters.any? %>
+  <% @sitters.each do |sitter| %>
+    <div>
+      <p><strong>Nome:</strong> <%= link_to sitter.name, user_path(sitter) %></p>
+      <p><strong>Endereço:</strong> <%= sitter.address %></p>
+      <p><strong>Email:</strong> <%= sitter.email %></p>
+      <p><strong>Disponibilidades:</strong></p>
+      <ul>
+        <% sitter.availabilities.each do |availability| %>
+          <li><%= availability.date.strftime("%d/%m/%Y") %></li>
         <% end %>
-      <% else %>
-        <p>Nenhum sitter encontrado</p>
-      <% end %>
+      </ul>
     </div>
-  </div>
+    <hr>
+  <% end %>
+<% else %>
+  <p>Nenhum sitter encontrado</p>
+<% end %>
 </div>
