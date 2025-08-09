@@ -20,6 +20,20 @@
     <%= link_to 'Login', new_user_session_path %> |
     <%= link_to 'Sign up', new_user_registration_path %>
   <% end %>-->
-   <%= yield %>
-  </body>
+<body>
+  <main>
+    <%= yield %>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>© 2025 Pet Care. Todos os direitos reservados.</p>
+      <nav>
+        <a href="/sobre">Sobre</a> |
+        <a href="/contato">Contato</a> |
+        <a href="/privacidade">Política de Privacidade</a>
+      </nav>
+    </div>
+  </footer>
+</body>
 </html>
