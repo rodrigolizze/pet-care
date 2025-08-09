@@ -15,7 +15,7 @@ class UsersController < ApplicationController
 
   def activate_sitter
     if current_user.update(user_params.merge(role: "sitter")) # or sitter: true
-      redirect_to current_user, notice: "You are now a sitter!"
+      redirect_to sitter_users_path, notice: "You are now a sitter!"
     else
       render :become_sitter, status: :unprocessable_entity
     end
