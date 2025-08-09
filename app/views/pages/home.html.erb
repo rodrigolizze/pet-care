@@ -1,17 +1,29 @@
-<div class=container>
-<h1>Busca de Pet Sitters</h1>
+<div class="container mt-4">
+  <div class="row justify-content-center">
+    <div class="col-lg-10">
+      <h1 class="mb-4 text-center">Encontre um Pet Sitter</h1>
 
-<%= form_with url: root_path, method: :get, local: true do |form| %>
-  <%= form.label :city, "Cidade" %><br>
-  <%= form.text_field :city, value: params[:city] %><br><br>
+        <%= simple_form_for :search, url: root_path, method: :get, html: { class: 'row g-2 align-items-end' } do |f| %>
+          <div class="col-md-3">
+            <%= f.input :city, label: false, placeholder: "Onde o seu pet ficará?", wrapper: false, input_html: { value: params.dig(:search, :city), class: 'form-control' } %>
+          </div>
 
-  <%= form.label :date, "Data de Disponibilidade" %><br>
-  <%= form.date_field :date, value: params[:date] %><br><br>
+          <div class="col-md-2">
+            <%= f.input :start_date, label: false, wrapper: false, placeholder: "Check-in", input_html: { type: 'date', value: params.dig(:search, :start_date), class: 'form-control' } %>
+          </div>
 
-  <%= form.submit "Buscar" %>
-<% end %>
+          <div class="col-md-2">
+            <%= f.input :end_date, label: false, wrapper: false, placeholder: "Check-out", input_html: { type: 'date', value: params.dig(:search, :end_date), class: 'form-control' } %>
+          </div>
 
-<hr>
+          <div class="col-md-2">
+            <div class="d-grid h-100">
+              <%= f.button :submit, "Buscar", class: "btn btn-primary h-100" %>
+            </div>
+          </div>
+        <% end %>
+
+      <hr>
 
 <% if @sitters.present? && @sitters.any? %>
   <% @sitters.each do |sitter| %>
@@ -31,7 +43,4 @@
 <% else %>
   <p>Nenhum sitter encontrado</p>
 <% end %>
-
-<%= link_to "Log out", destroy_user_session_path, data: {turbo_method: :delete}%>
-<%= link_to "Login", new_user_session_path %>
 </div>
