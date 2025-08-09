@@ -1,0 +1,65 @@
+<h1>Minhas Reservas</h1>
+
+<h2>Como cliente</h2>
+<% if @my_bookings.any? %>
+  <table>
+    <thead>
+      <tr>
+        <th>Data</th>
+        <th>Cuidador</th>
+        <th>Pet</th>
+        <th>Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @my_bookings.each do |b| %>
+        <tr>
+          <td><%= b.availability.date.strftime("%d/%m/%Y") %></td>
+          <td><%= b.availability.user.name %></td>
+          <td><%= "#{b.pet_name} — #{b.animal_type}, #{b.pet_size}, nasc. #{b.pet_birth_year}" %></td>
+          <td>
+            <%= button_to "Cancelar",
+                  availability_booking_path(b.availability, b),
+                  method: :delete,
+                  data: { confirm: "Cancelar esta reserva?" } %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <p>Você ainda não possui reservas.</p>
+<% end %>
+
+<hr>
+
+<h2>Recebidas (como cuidador)</h2>
+<% if @received_bookings.any? %>
+  <table>
+    <thead>
+      <tr>
+        <th>Data</th>
+        <th>Cliente</th>
+        <th>Pet</th>
+        <th>Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @received_bookings.each do |b| %>
+        <tr>
+          <td><%= b.availability.date.strftime("%d/%m/%Y") %></td>
+          <td><%= b.user.name %> (<%= b.user.email %>)</td>
+          <td><%= "#{b.pet_name} — #{b.animal_type}, #{b.pet_size}, nasc. #{b.pet_birth_year}" %></td>
+          <td>
+            <%= button_to "Cancelar",
+                  availability_booking_path(b.availability, b),
+                  method: :delete,
+                  data: { confirm: "Cancelar esta reserva?" } %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <p>Nenhuma reserva recebida até o momento.</p>
+<% end %>
