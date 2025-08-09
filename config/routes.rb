@@ -8,7 +8,14 @@ Rails.application.routes.draw do
   # Can be used by load balancers and uptime monitors to verify that the app is live.
   get "up" => "rails/health#show", as: :rails_health_check
 
-  resources :users, only: :show   # Add this to enable user profile pages
+  resources :users, only: :show do  # Add this to enable user profile pages
+    collection do
+      get  "become_sitter", to: "users#become_sitter"    # form page
+      post "become_sitter", to: "users#activate_sitter"  # submission
+      get "sitter", to: "users#sitter_dashboard"
+    end
+  end
+
   resources :availabilities, only: [:index, :new, :create, :destroy] do
     resources :bookings, only: [:new, :create, :destroy]
   end
