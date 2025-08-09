@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
-  before_action :authenticate_user!  # ensure only logged-in users can view profiles
+  before_action :authenticate_user! # ensure only logged-in users can view profiles
+  skip_before_action :authenticate_user!, only: [:show]
 
   def show
     @user = User.find(params[:id])
