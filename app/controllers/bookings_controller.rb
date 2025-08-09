@@ -9,6 +9,11 @@ class BookingsController < ApplicationController
 
   def create
     @availability = Availability.find(params[:availability_id])
+
+    if @availability.user_id == current_user.id
+      return redirect_to user_path(@availability.user), alert: "Você não pode reservar a sua própria data."
+    end
+
     @booking = Booking.new(booking_params)
     @booking.user = current_user
     @booking.availability = @availability
@@ -18,6 +23,9 @@ class BookingsController < ApplicationController
     else
       render :new
     end
+  rescue ActiveRecord::RecordNotUnique
+    # Unique index on bookings.availability_id fired → already taken
+    redirect_to user_path(@availability.user), alert: "Esta data acabou de ser reservada por outra pessoa."
   end
 
   def available_dates
@@ -31,6 +39,11 @@ class BookingsController < ApplicationController
     availability = Availability.find(params[:availability_id])
     booking = availability.booking
 
+    # if it's already free, just inform and return
+    unless booking
+      return redirect_to user_path(availability.user), notice: "Esta data já está livre."
+    end
+
     # allow the sitter (owner of availability) or the client (owner of booking)
     unless availability.user == current_user || booking.user == current_user
       return redirect_to user_path(availability.user), alert: "Acesso restrito."
@@ -43,6 +56,7 @@ class BookingsController < ApplicationController
   def index
     # Bookings I made (as client)
     @my_bookings = current_user.bookings
+                               .joins(:availability)
                                .includes(availability: :user) # sitter is availability.user
                                .order('availabilities.date ASC')
 

@@ -10,7 +10,7 @@
       <p><strong>Email:</strong> <%= sitter.email %></p>
       <p><strong>Disponibilidades:</strong></p>
       <ul>
-        <% sitter.availabilities.each do |availability| %>
+        <% sitter.availabilities.future.unbooked.ordered.each do |availability| %>
           <li><%= availability.date.strftime("%d/%m/%Y") %></li>
         <% end %>
       </ul>

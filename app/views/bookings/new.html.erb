@@ -1,4 +1,7 @@
 <h1>Reservar para <%= @availability.date.strftime("%d/%m/%Y") %></h1>
+<p>Cuidador: <%= @availability.user.name %> — <%= @availability.user.email %></p>
+
+<%= link_to "Voltar ao perfil", user_path(@availability.user), class: "btn btn-link" %>
 
 <%= form_with model: [@availability, @booking], local: true do |form| %>
   <% if @booking.errors.any? %>
