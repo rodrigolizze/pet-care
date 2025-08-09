@@ -8,12 +8,33 @@
 <% if @availabilities.any? %>
   <ul>
     <% @availabilities.each do |availability| %>
-      <li>
-        <%= availability.date.strftime("%d/%m/%Y") %>
-        <% if availability.bookings.none? %>
-          <%= link_to "Reservar", new_availability_booking_path(availability), class: "btn btn-sm btn-primary" %>
+      <li style="margin-bottom: 0.75rem;">
+        <strong><%= availability.date.strftime("%d/%m/%Y") %></strong>
+
+        <% if availability.booking.present? %>
+          <% b = availability.booking %>
+          <% if current_user == @user || current_user == b.user %>
+            <%= button_to "Cancelar reserva",
+                          availability_booking_path(availability, b),
+                          method: :delete,
+                          data: { confirm: "Tem certeza que deseja cancelar?" },
+                          class: "btn btn-sm btn-danger",
+                          style: "margin-left: 8px;" %>
+          <% end %>
+          <div style="margin-top: 4px;">
+            <span class="badge bg-secondary">Reservado</span>
+            <div>
+              <em>Cliente:</em> <%= b.user.name %> (<%= b.user.email %>)
+            </div>
+            <div>
+              <em>Pet:</em> <%= b.pet_name %> —
+              <%= b.animal_type %>, <%= b.pet_size %>,
+              nasc. <%= b.pet_birth_year %>
+            </div>
+          </div>
         <% else %>
-          <span class="text-muted">Já reservado</span>
+          <%= link_to "Reservar", new_availability_booking_path(availability),
+                      class: "btn btn-sm btn-primary", style: "margin-left: 8px;" %>
         <% end %>
       </li>
     <% end %>

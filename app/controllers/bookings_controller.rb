@@ -27,6 +27,19 @@ class BookingsController < ApplicationController
                         .order(:date)
   end
 
+  def destroy
+    availability = Availability.find(params[:availability_id])
+    booking = availability.booking
+
+    # allow the sitter (owner of availability) or the client (owner of booking)
+    unless availability.user == current_user || booking.user == current_user
+      return redirect_to user_path(availability.user), alert: "Acesso restrito."
+    end
+
+    booking.destroy
+    redirect_to user_path(availability.user), notice: "Reserva cancelada e data liberada."
+  end
+
   private
 
   def booking_params

@@ -4,6 +4,8 @@ class UsersController < ApplicationController
   def show
     @user = User.find(params[:id])
     # Only show future availabilities of this sitter (optional but recommended)
-    @availabilities = @user.availabilities.where("date >= ?", Date.today).order(:date)
+    @availabilities = @user.availabilities.where("date >= ?", Date.today)
+                           .includes(booking: :user)   # avoid N+1
+                           .order(:date)
   end
 end

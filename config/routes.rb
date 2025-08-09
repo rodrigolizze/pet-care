@@ -10,7 +10,7 @@ Rails.application.routes.draw do
 
   resources :users, only: :show   # Add this to enable user profile pages
   resources :availabilities, only: [:index, :new, :create, :destroy] do
-    resources :bookings, only: [:new, :create]
+    resources :bookings, only: [:new, :create, :destroy]
   end
 
   get "bookings/available_dates", to: "bookings#available_dates", as: :available_dates
