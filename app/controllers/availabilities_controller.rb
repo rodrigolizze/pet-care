@@ -33,6 +33,11 @@ class AvailabilitiesController < ApplicationController
 
   def destroy
     @availability = current_user.availabilities.find(params[:id])
+
+    if @availability.booking.present?
+      return redirect_to availabilities_path, alert: "Não é possível excluir: data já reservada."
+    end
+
     @availability.destroy
     redirect_to availabilities_path, notice: "Disponibilidade excluída."
   end
