@@ -40,6 +40,19 @@ class BookingsController < ApplicationController
     redirect_to user_path(availability.user), notice: "Reserva cancelada e data liberada."
   end
 
+  def index
+    # Bookings I made (as client)
+    @my_bookings = current_user.bookings
+                               .includes(availability: :user) # sitter is availability.user
+                               .order('availabilities.date ASC')
+
+    # Bookings I received (as sitter)
+    @received_bookings = Booking.joins(:availability)
+                                .where(availabilities: { user_id: current_user.id })
+                                .includes(:user, availability: :user) # client is booking.user
+                                .order('availabilities.date ASC')
+  end
+
   private
 
   def booking_params
