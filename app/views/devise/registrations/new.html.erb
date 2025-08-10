@@ -2,18 +2,19 @@
   <div class="row justify-content-center">
     <div class="col-4">
 
-      <h2>Sign up</h2>
+      <h2>Cadastrar</h2>
 
       <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-        <%= f.error_notification %>
-        <%= resource.errors.full_messages%>
+
 
         <div class="form-inputs">
-          <%= f.input :name,
+          <%= f.input :name, 
+                      label: "Nome completo",
                       required: true,
                       autofocus: true,
                       input_html: { autocomplete: "name" }%>
           <%= f.input :birth_date, 
+                      label: "Data de Nascimento",
                       required: true,
                       as: :date,
                       start_year: Time.zone.now.year - 120,
@@ -29,24 +30,31 @@
           <%= f.input :email,
                       required: true,
                       input_html: { autocomplete: "email" }%>
-          <%= f.input :telephone,
+          <%= f.input :telephone, 
+                      label: "Telefone",
                       required: true,
                       autofocus: true,
                       input_html: { autocomplete: "telephone" }%>  
           <%= f.input :address,
+                      label: "Endereço",
                       required: true,
                       input_html: { autocomplete: "address" }%>
           <%= f.input :password,
+                      label: "Senha",
                       required: true,
                       hint: ("#{@minimum_password_length} characters minimum" if @minimum_password_length),
                       input_html: { autocomplete: "new-password" } %>
           <%= f.input :password_confirmation,
+                      label: "Confirmar senha",
                       required: true,
                       input_html: { autocomplete: "new-password" } %>
+          <%= f.input :photo, as: :file %>
         </div>
 
         <div class="d-grid">
-          <%= f.button :submit, "Sign up", class:"btn btn-primary" %>
+          <button type="submit" class="btn btn-primary">
+            <i class="fa-solid fa-paw"></i> Cadastrar
+          </button>
         </div>
       <% end %>
 
