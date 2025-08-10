@@ -12,6 +12,6 @@ class User < ApplicationRecord
   # Roles: sitter or client
   enum role: { client: 'client', sitter: 'sitter' }
 
-  validates :name, :cpf, presence: true
+  validates :name, :cpf, :photo, presence: true
   validates :cpf, uniqueness: true
 end

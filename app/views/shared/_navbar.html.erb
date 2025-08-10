@@ -41,22 +41,24 @@
       <ul class="navbar-nav me-auto">
         <% if user_signed_in? %>
           <li class="nav-item">
-            <%= link_to "Become a sitter", become_sitter_users_path, class: "nav-link" %>
+            <%= link_to  become_sitter_users_path, class: "nav-link" do %>
+              <i class="fa-solid fa-house"></i> Quero ser sitter 
+            <% end %>
           </li>
           <li class="nav-item dropdown">
           <a href="#" class="avatar" id="navbarDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <%= image_tag "https://kitt.lewagon.com/placeholder/users/ssaunier", class: "avatar", alt: "dropdown menu" %>
+            <%= cl_image_tag current_user.photo.key, class: "avatar", alt: "dropdown menu" %>
           </a>
             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
               <%= link_to "Action", "#", class: "dropdown-item" %>
-              <%= link_to "Availabilities", new_availability_path, class: "dropdown-item" %>
-              <%= link_to "Bookings", bookings_path, class: "dropdown-item" %>
-              <%= link_to "Log out", destroy_user_session_path, data: {turbo_method: :delete}, class: "dropdown-item" %>
+              <%= link_to "Datas disponíveis", new_availability_path, class: "dropdown-item" %>
+              <%= link_to "Minhas reservas", bookings_path, class: "dropdown-item" %>
+              <%= link_to "Desconectar", destroy_user_session_path, data: {turbo_method: :delete}, class: "dropdown-item" %>
             </div>
           </li>
         <% else %>
           <li class="nav-item">
-            <%= link_to "Login", new_user_session_path, class: "nav-link" %>
+            <%= link_to "Criar conta ou entrar", new_user_session_path, class: "nav-link" %>
           </li>
         <% end %>
       </ul>
