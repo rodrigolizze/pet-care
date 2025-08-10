@@ -1,0 +1,19 @@
+.container-sign-in {
+  width: 900px;
+  height: 600px;
+  display: flex;
+  align-items: center;
+}
+
+.rounded-image {
+  border-radius: 50%; /* Makes the image circular */
+  width: 350px; /* Example: Set a fixed width for consistent sizing */
+  height: 350px; /* Example: Set a fixed height for consistent sizing */
+  object-fit: cover; /* Ensures the image fills the circular shape without distortion */
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.sign-in {
+  display: flex;
+  justify-content: center;
+}
