@@ -1,4 +1,3 @@
-
 <div class="container">
   <h1>Become a Sitter</h1>
 
@@ -8,29 +7,13 @@
       <%= f.text_area :bio, class: "form-control" %>
     </div>
 
-    <div class="mb-3">
-      <%= f.label :experience %>
-      <%= f.text_area :experience, class: "form-control" %>
+        <div class="col-12 d-flex gap-2 pt-2">
+          <%= f.submit "Tornar-se cuidador", class: "btn btn-success" %>
+          <%= link_to "Cancelar", root_path, class: "btn btn-outline-secondary" %>
+        </div>
+      <% end %>
     </div>
-
-    <%= f.label :property_type, "Property Type" %>
-    <%= f.select :property_type, options_for_select(User::PROPERTY_TYPES.map { |p| [p.capitalize, p] }, current_user.property_type), include_blank: "Select..." %>
-
-    <%= f.label :backyard, "Backyard" %>
-    <%= f.check_box :backyard %>
-
-    <%= f.label :has_pet, "Has Pet" %>
-    <%= f.check_box :has_pet %>
-
-    <%= f.label :screened_windows, "Screened Windows" %>
-    <%= f.check_box :screened_windows %>
-
-    <%= f.label :animal_sizes, "Accepts Animals of Size" %>
-    <%= f.select :animal_sizes, options_for_select(User::ANIMAL_SIZES.map { |a| [a.capitalize, a] }, current_user.animal_sizes), include_blank: "Select..." %>
 
     <%= f.submit "Become a sitter", class: "btn btn-primary" %>
   <% end %>
 </div>
-
-
-

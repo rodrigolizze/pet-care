@@ -1,21 +1,42 @@
-<h1>Disponibilidades de Cuidadores</h1>
+<div class="container py-3">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h1 class="m-0">Disponibilidades de Cuidadores</h1>
+    <%# Optional: add a link back home %>
+    <%#= link_to "Voltar", root_path, class: "btn btn-outline-secondary btn-sm" %>
+  </div>
 
-<h1>Datas Disponíveis</h1>
-<table>
-  <tr>
-    <th>Data</th>
-    <th>Cuidador</th>
-    <th></th> <!-- column for the profile button -->
-  </tr>
-  <% @availabilities.each do |availability| %>
-    <tr>
-      <td><%= l(availability.date, format: :long) %></td>
-      <td><%= availability.user.name %></td>
-      <td>
-        <%= link_to "Ver Perfil",
-                    user_path(availability.user),
-                    class: "btn btn-secondary" %>
-      </td>
-    </tr>
-  <% end %>
-</table>
+  <div class="card shadow-sm">
+    <div class="card-body p-0">
+      <% if @availabilities.any? %>
+        <div class="table-responsive">
+          <table class="table table-striped table-hover align-middle m-0">
+            <thead class="table-light">
+              <tr>
+                <th style="width: 200px;">Data</th>
+                <th>Cuidador</th>
+                <th style="width: 140px;"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @availabilities.each do |availability| %>
+                <tr>
+                  <td class="fw-semibold"><%= l(availability.date, format: :long) %></td>
+                  <td><%= availability.user.name %></td>
+                  <td>
+                    <%= link_to "Ver Perfil",
+                                user_path(availability.user),
+                                class: "btn btn-outline-primary btn-sm" %>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      <% else %>
+        <div class="p-4">
+          <div class="alert alert-secondary m-0">Nenhuma data disponível no momento.</div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

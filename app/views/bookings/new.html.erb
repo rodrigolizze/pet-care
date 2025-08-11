@@ -1,38 +1,58 @@
-<h1>Reservar para <%= @availability.date.strftime("%d/%m/%Y") %></h1>
-<p>Cuidador: <%= @availability.user.name %> — <%= @availability.user.email %></p>
+<div class="container py-3">
+  <div class="d-flex align-items-center justify-content-between mb-3">
+    <h1 class="h4 m-0">Reservar para <%= @availability.date.strftime("%d/%m/%Y") %></h1>
+    <%= link_to "Voltar ao perfil", user_path(@availability.user), class: "btn btn-outline-secondary btn-sm" %>
+  </div>
 
-<%= link_to "Voltar ao perfil", user_path(@availability.user), class: "btn btn-link" %>
+  <div class="card shadow-sm">
+    <div class="card-body">
+      <div class="mb-3">
+        <div class="small text-muted">
+          <strong>Cuidador:</strong> <%= @availability.user.name %> — <%= @availability.user.email %>
+        </div>
+      </div>
 
-<%= form_with model: [@availability, @booking], local: true do |form| %>
-  <% if @booking.errors.any? %>
-    <div class="alert alert-danger">
-      <ul>
-        <% @booking.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
-        <% end %>
-      </ul>
+      <% if @booking.errors.any? %>
+        <div class="alert alert-danger">
+          <ul class="mb-0">
+            <% @booking.errors.full_messages.each do |message| %>
+              <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+
+      <%= form_with model: [@availability, @booking], local: true, class: "row g-3 mt-1" do |form| %>
+        <div class="col-12 col-md-6">
+          <%= form.label :pet_name, "Nome do Pet", class: "form-label" %>
+          <%= form.text_field :pet_name, class: "form-control", placeholder: "Ex.: Thor" %>
+        </div>
+
+        <div class="col-12 col-md-6">
+          <%= form.label :animal_type, "Tipo de Animal", class: "form-label" %>
+          <%= form.select :animal_type,
+                [["Cachorro","Cachorro"],["Gato","Gato"],["Coelho","Coelho"],["Pássaro","Pássaro"]],
+                {}, class: "form-select" %>
+        </div>
+
+        <div class="col-12 col-md-6">
+          <%= form.label :pet_size, "Tamanho", class: "form-label" %>
+          <%= form.select :pet_size,
+                [["Pequeno","Pequeno"],["Médio","Médio"],["Grande","Grande"]],
+                {}, class: "form-select" %>
+        </div>
+
+        <div class="col-12 col-md-6">
+          <%= form.label :pet_birth_year, "Ano de Nascimento", class: "form-label" %>
+          <%= form.number_field :pet_birth_year, in: 2000..Date.today.year, class: "form-control" %>
+          <div class="form-text">Use o ano completo (ex.: 2018).</div>
+        </div>
+
+        <div class="col-12 d-flex gap-2 pt-2">
+          <%= form.submit "Confirmar Reserva", class: "btn btn-success" %>
+          <%= link_to "Cancelar", user_path(@availability.user), class: "btn btn-outline-secondary" %>
+        </div>
+      <% end %>
     </div>
-  <% end %>
-
-  <div class="form-group">
-    <%= form.label :pet_name, "Nome do Pet" %>
-    <%= form.text_field :pet_name, class: "form-control" %>
   </div>
-
-  <div class="form-group">
-    <%= form.label :animal_type, "Tipo de Animal" %>
-    <%= form.select :animal_type, ["Cachorro", "Gato", "Coelho", "Pássaro"], {}, class: "form-control" %>
-  </div>
-
-  <div class="form-group">
-    <%= form.label :pet_size, "Tamanho" %>
-    <%= form.select :pet_size, ["Pequeno", "Médio", "Grande"], {}, class: "form-control" %>
-  </div>
-
-  <div class="form-group">
-    <%= form.label :pet_birth_year, "Ano de Nascimento" %>
-    <%= form.number_field :pet_birth_year, in: 2000..Date.today.year, class: "form-control" %>
-  </div>
-
-  <%= form.submit "Confirmar Reserva", class: "btn btn-success mt-2" %>
-<% end %>
+</div>
