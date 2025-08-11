@@ -10,7 +10,12 @@ class User < ApplicationRecord
   has_one_attached :photo
 
   # Roles: sitter or client
-  enum role: { client: 'client', sitter: 'sitter' }
+  # enum role: { client: 'client', sitter: 'sitter' }
+  PROPERTY_TYPES = %w[house apartment].freeze
+  ANIMAL_SIZES = %w[small medium big all].freeze
+
+  validates :property_type, inclusion: { in: PROPERTY_TYPES }, allow_nil: true
+  validates :animal_sizes, inclusion: { in: ANIMAL_SIZES }, allow_nil: true
 
   validates :name, :cpf, :photo, presence: true
   validates :cpf, uniqueness: true

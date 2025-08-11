@@ -1,33 +1,11 @@
-<div class="container py-4" style="max-width: 800px;">
-  <h1 class="h3 mb-3">Tornar-se Cuidador</h1>
-  <p class="text-muted mb-4">
-    Conte um pouco sobre você e sua experiência com pets. Essas informações aparecem no seu perfil para os clientes.
-  </p>
+<div class="container">
+  <h1>Become a Sitter</h1>
 
-  <div class="card shadow-sm">
-    <div class="card-body">
-      <% if current_user.errors.any? %>
-        <div class="alert alert-danger">
-          <ul class="mb-0">
-            <% current_user.errors.full_messages.each do |msg| %>
-              <li><%= msg %></li>
-            <% end %>
-          </ul>
-        </div>
-      <% end %>
-
-      <%= form_with model: current_user, url: become_sitter_users_path, method: :post, local: true, class: "row g-3" do |f| %>
-        <div class="col-12">
-          <%= f.label :bio, "Bio", class: "form-label" %>
-          <%= f.text_area :bio, rows: 4, class: "form-control", placeholder: "Ex.: Sou apaixonado por animais, tenho 3 anos de experiência cuidando de cães e gatos..." %>
-          <div class="form-text">Dica: fale sobre sua rotina, preferências e cuidados que oferece.</div>
-        </div>
-
-        <div class="col-12">
-          <%= f.label :experience, "Experiência", class: "form-label" %>
-          <%= f.text_area :experience, rows: 4, class: "form-control", placeholder: "Ex.: Já trabalhei em pet shop, administro medicação oral, passeios 2x ao dia..." %>
-          <div class="form-text">Inclua certificações, tipos de pets atendidos e habilidades específicas.</div>
-        </div>
+  <%= form_with model: current_user, url: become_sitter_users_path, method: :post do |f| %>
+    <div class="mb-3">
+      <%= f.label :bio %>
+      <%= f.text_area :bio, class: "form-control" %>
+    </div>
 
         <div class="col-12 d-flex gap-2 pt-2">
           <%= f.submit "Tornar-se cuidador", class: "btn btn-success" %>
@@ -35,5 +13,7 @@
         </div>
       <% end %>
     </div>
-  </div>
+
+    <%= f.submit "Become a sitter", class: "btn btn-primary" %>
+  <% end %>
 </div>
