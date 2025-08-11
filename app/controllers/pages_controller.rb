@@ -30,4 +30,16 @@ class PagesController < ApplicationController
 
   @sitters = sitters.includes(:availabilities)
   end
+
+  def about
+  end
+
+  def how_it_works
+  end
+
+  def work_with_us
+  end
+
+  def privacy
+  end
 end
