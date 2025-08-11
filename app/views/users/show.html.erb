@@ -1,44 +1,72 @@
-<h1>Perfil de <%= @user.name %></h1>
+<div class="container py-3">
 
-<p><strong>Endereço:</strong> <%= @user.address %></p>
-<p><strong>Email:</strong> <%= @user.email %></p>
-
-<h2>Datas disponíveis</h2>
-
-<% if @availabilities.any? %>
-  <ul>
-    <% @availabilities.each do |availability| %>
-      <li style="margin-bottom: 0.75rem;">
-        <strong><%= availability.date.strftime("%d/%m/%Y") %></strong>
-
-        <% if availability.booking.present? %>
-          <% b = availability.booking %>
-          <% if current_user == @user || current_user == b.user %>
-            <%= button_to "Cancelar reserva",
-                          availability_booking_path(availability, b),
-                          method: :delete,
-                          data: { confirm: "Tem certeza que deseja cancelar?" },
-                          class: "btn btn-sm btn-danger",
-                          style: "margin-left: 8px;" %>
-          <% end %>
-          <div style="margin-top: 4px;">
-            <span class="badge bg-secondary">Reservado</span>
-            <div>
-              <em>Cliente:</em> <%= b.user.name %> (<%= b.user.email %>)
-            </div>
-            <div>
-              <em>Pet:</em> <%= b.pet_name %> —
-              <%= b.animal_type %>, <%= b.pet_size %>,
-              nasc. <%= b.pet_birth_year %>
-            </div>
+  <!-- Header / Profile card -->
+  <div class="card shadow-sm mb-4">
+    <div class="card-body">
+      <div class="d-flex align-items-center gap-3">
+        <div class="rounded-circle bg-light border" style="width:56px;height:56px; display:flex; align-items:center; justify-content:center;">
+          <span class="fw-bold"><%= @user.name.to_s.first&.upcase %></span>
+        </div>
+        <div>
+          <h1 class="h4 mb-1">Perfil de <%= @user.name %></h1>
+          <div class="text-muted small">
+            <span class="me-3"><strong>Endereço:</strong> <%= @user.address %></span>
+            <span><strong>Email:</strong> <%= @user.email %></span>
           </div>
-        <% else %>
-          <%= link_to "Reservar", new_availability_booking_path(availability),
-                      class: "btn btn-sm btn-primary", style: "margin-left: 8px;" %>
-        <% end %>
-      </li>
-    <% end %>
-  </ul>
-<% else %>
-  <p>Este cuidador não possui datas disponíveis.</p>
-<% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Availabilities -->
+  <div class="d-flex justify-content-between align-items-center mb-2">
+    <h2 class="h5 m-0">Datas disponíveis</h2>
+  </div>
+
+  <% if @availabilities.any? %>
+    <ul class="list-group shadow-sm">
+      <% @availabilities.each do |availability| %>
+        <li class="list-group-item d-flex justify-content-between align-items-start">
+          <div class="me-3">
+            <div class="fw-semibold"><%= availability.date.strftime("%d/%m/%Y") %></div>
+
+            <% if availability.booking.present? %>
+              <% b = availability.booking %>
+              <div class="mt-2 small text-muted">
+                <div class="mb-1">
+                  <span class="badge text-bg-secondary">Reservado</span>
+                </div>
+                <div><em>Cliente:</em> <%= b.user.name %> (<%= b.user.email %>)</div>
+                <div>
+                  <em>Pet:</em>
+                  <%= b.pet_name %> — <%= b.animal_type %>, <%= b.pet_size %>, nasc. <%= b.pet_birth_year %>
+                </div>
+              </div>
+            <% end %>
+          </div>
+
+          <div class="text-end">
+            <% if availability.booking.present? %>
+              <% b = availability.booking %>
+              <% if current_user == @user || current_user == b.user %>
+                <%= button_to "Cancelar reserva",
+                              availability_booking_path(availability, b),
+                              method: :delete,
+                              data: { confirm: "Tem certeza que deseja cancelar?" },
+                              class: "btn btn-outline-danger btn-sm" %>
+              <% end %>
+            <% else %>
+              <%= link_to "Reservar",
+                          new_availability_booking_path(availability),
+                          class: "btn btn-primary btn-sm" %>
+                          <%= link_to "Voltar", root_path, class: "btn btn-outline-secondary btn-sm" %>
+            <% end %>
+          </div>
+        </li>
+      <% end %>
+    </ul>
+  <% else %>
+    <div class="alert alert-secondary">Este cuidador não possui datas disponíveis.</div>
+  <% end %>
+
+</div>

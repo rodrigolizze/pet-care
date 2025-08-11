@@ -1,6 +1,66 @@
-<div class="container p-4">
-  <h1>Trabalhe Conosco</h1>
-  <p>Junte-se à nossa equipe de cuidadores apaixonados por animais! Na PetCare, você pode oferecer seus serviços, escolher sua disponibilidade e receber por cuidar de pets.</p>
-  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget varius tortor. Donec convallis mi vel faucibus malesuada. Vivamus fermentum, metus in feugiat fermentum, justo massa suscipit lacus, nec commodo nunc nunc at elit. Morbi quis turpis ac lacus tincidunt suscipit. Nam ultricies, urna sit amet facilisis volutpat, nibh sapien facilisis libero, a feugiat mauris velit eget purus. Integer at leo non augue varius euismod. Curabitur tincidunt, ligula nec feugiat iaculis, urna orci feugiat turpis, in cursus erat nibh nec est.
-  </p>
+<div class="container py-5" style="max-width: 1000px;">
+  <!-- Hero -->
+  <div class="text-center mb-5">
+    <h1 class="display-6 fw-semibold">Trabalhe Conosco</h1>
+    <p class="text-muted mt-2">
+      Junte-se à nossa rede de cuidadores apaixonados por animais. Defina sua disponibilidade, receba pedidos e seja pago com segurança.
+    </p>
+  </div>
+
+  <!-- Intro -->
+  <div class="card border-0 shadow-sm p-4 mb-4">
+    <p class="mb-0">
+      Na <strong>PetCare</strong>, você oferece seus serviços com total autonomia: escolha quando quer atender,
+      gerencie suas reservas e construa sua reputação com avaliações reais.
+    </p>
+  </div>
+
+  <!-- Benefits -->
+  <div class="row g-4 mb-4">
+    <div class="col-12 col-md-4">
+      <div class="card h-100 border-0 shadow-sm text-center p-4">
+        <div class="text-primary mb-3"><i class="bi bi-calendar-check display-6"></i></div>
+        <h5 class="mb-2">Agenda Flexível</h5>
+        <p class="text-muted mb-0">Você escolhe os dias e horários disponíveis para atender.</p>
+      </div>
+    </div>
+    <div class="col-12 col-md-4">
+      <div class="card h-100 border-0 shadow-sm text-center p-4">
+        <div class="text-primary mb-3"><i class="bi bi-shield-check display-6"></i></div>
+        <h5 class="mb-2">Segurança</h5>
+        <p class="text-muted mb-0">Mensagens, pagamentos e histórico centralizados na plataforma.</p>
+      </div>
+    </div>
+    <div class="col-12 col-md-4">
+      <div class="card h-100 border-0 shadow-sm text-center p-4">
+        <div class="text-primary mb-3"><i class="bi bi-star-fill display-6"></i></div>
+        <h5 class="mb-2">Reputação</h5>
+        <p class="text-muted mb-0">Receba avaliações e destaque-se para novos clientes.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Long text block (your existing content) -->
+  <div class="card border-0 shadow-sm p-4 mb-4">
+    <p>
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget varius tortor. Donec convallis mi vel faucibus malesuada.
+      Vivamus fermentum, metus in feugiat fermentum, justo massa suscipit lacus, nec commodo nunc nunc at elit.
+      Morbi quis turpis ac lacus tincidunt suscipit. Nam ultricies, urna sit amet facilisis volutpat, nibh sapien facilisis libero,
+      a feugiat mauris velit eget purus. Integer at leo non augue varius euismod. Curabitur tincidunt, ligula nec feugiat iaculis,
+      urna orci feugiat turpis, in cursus erat nibh nec est.
+    </p>
+  </div>
+
+  <!-- Call to Action -->
+  <div class="text-center">
+    <div class="d-inline-flex flex-wrap gap-2">
+      <% if user_signed_in? %>
+        <%= link_to "Adicionar Disponibilidade", new_availability_path, class: "btn btn-success" %>
+        <%= link_to "Ver Meu Dashboard", "/users/sitter", class: "btn btn-outline-primary" %>
+      <% else %>
+        <%= link_to "Criar conta", new_user_registration_path, class: "btn btn-primary" %>
+        <%= link_to "Entrar", new_user_session_path, class: "btn btn-outline-secondary" %>
+      <% end %>
+    </div>
+  </div>
 </div>
