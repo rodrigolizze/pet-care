@@ -39,6 +39,9 @@
                       label: "Endereço",
                       required: true,
                       input_html: { autocomplete: "address" }%>
+          <%= f.label :city, "Cidade" %>
+          <%= f.text_field :city, class: "form-control", placeholder: "Digite sua cidade", 
+                      required: true %>
           <%= f.input :password,
                       label: "Senha",
                       required: true,

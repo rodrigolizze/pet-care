@@ -17,6 +17,6 @@ class User < ApplicationRecord
   validates :property_type, inclusion: { in: PROPERTY_TYPES }, allow_nil: true
   validates :animal_sizes, inclusion: { in: ANIMAL_SIZES }, allow_nil: true
 
-  validates :name, :cpf, :photo, presence: true
+  validates :name, :cpf, :photo, :city, presence: true
   validates :cpf, uniqueness: true
 end
