@@ -1,6 +1,6 @@
 <div class="container mt-4">
-  <div class="d-flex justify-content-between align-items-center mb-3">
-    <h1 class="mb-0">Sitter Dashboard</h1>
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h1 class="mb-0">Painel do cuidador</h1>
     <%= link_to "Adicionar Disponibilidade", new_availability_path, class: "btn btn-success" %>
   </div>
 
@@ -38,9 +38,52 @@
 
   <hr class="my-4">
 
-  <h3>Sobre Mim</h3>
+  <!-- <h3>Sobre Mim</h3>
   <div class="card p-3 shadow-sm">
-    <p><strong>Bio:</strong> <%= current_user.bio.presence || "Nenhuma bio fornecida." %></p>
+    <p><strong>Sobre <%=current_user.name%>:</strong> <%= current_user.bio.presence || "Nenhuma bio fornecida." %></p>
     <p><strong>Experiência:</strong> <%= current_user.experience.presence || "Nenhuma experiência informada." %></p>
+  </div> -->
+
+    <h3>Sobre Mim</h3>
+    <div class="p-3">
+      <p><strong>Nome:</strong> <%= current_user.name %></p>
+      <p><strong>Bio:</strong> <%= current_user.bio.presence || "Nenhuma bio fornecida." %></p>
+      <p><strong>Experiência:</strong> <%= current_user.experience.presence || "Nenhuma experiência informada." %></p>
+    </div>
+
+    <h3>Minhas Preferências</h3>
+    <div class="p-3">
+      <p><strong>Moro em:</strong> 
+        <%= current_user.property_type == "house" ? "Casa" : "Apartamento" %>
+      </p>
+
+      <p><strong>Aceito animais de porte:</strong> 
+        <% case current_user.animal_sizes %>
+          <% when "small"  %> 
+            Pequeno
+          <% when "medium" %> 
+            Médio
+          <% when "big"    %> 
+            Grande
+          <% when "all"    %> 
+            Todos os portes
+          <% else %> 
+            Não informado
+        <% end %>
+      </p>
+
+      <p><strong>Possui área externa:</strong> 
+        <%= current_user.backyard ? "Sim" : "Não" %>
+      </p>
+
+      <p><strong>Tem outros animais:</strong> 
+        <%= current_user.has_pet ? "Sim" : "Não" %>
+      </p>
+
+      <p><strong>Janelas teladas:</strong> 
+        <%= current_user.screened_windows ? "Sim" : "Não" %>
+      </p>
+    </div>
   </div>
+
 </div>
