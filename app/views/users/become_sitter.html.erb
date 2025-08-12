@@ -1,32 +1,68 @@
-<div class="container">
-  <h1>Become a Sitter</h1>
+<div class="container py-4" style="max-width: 800px;">
+  <h1 class="h3 mb-3">Torne-se um Cuidador</h1>
 
   <%= form_with model: current_user, url: become_sitter_users_path, method: :post do |f| %>
     <div class="mb-3">
-      <%= f.label :bio %>
-      <%= f.text_area :bio, class: "form-control" %>
+      <%= f.label :bio, "Sobre" %>
+      <%= f.text_area :bio, class: "form-control", placeholder: "Dica: fale sobre sua rotina, preferência e cuidados que oferece" %>
     </div>
 
     <div class="mb-3">
-      <%= f.label :experience %>
-      <%= f.text_area :experience, class: "form-control" %>
+      <%= f.label :experience, "Experiência" %>
+      <%= f.text_area :experience, class: "form-control", placeholder: "Inclua certificações, fale sobre sua experiência com pets e serviços que oferece" %>
     </div>
 
-    <%= f.label :property_type, "Property Type" %>
-    <%= f.select :property_type, options_for_select(User::PROPERTY_TYPES.map { |p| [p.capitalize, p] }, current_user.property_type), include_blank: "Select..." %>
+    <div class="d-inline-block mb-3">
+      <%= f.label :property_type, "Moro em:" %>
+      <%= f.select :property_type,
+                    options_for_select(
+                    User::PROPERTY_TYPES.map { |p|
+                      [ p == "house" ? "Casa" : "Apartamento", p ]
+                    },
+                    current_user.property_type
+                  ),
+                  include_blank: "Selecione..."
+      %>
+      <%= f.label :animal_sizes, "Aceito animais:" %>
+      <%= f.select :animal_sizes,
+                  options_for_select(
+                    User::ANIMAL_SIZES.map { |a|
+                      case a
+                      when "small"  then ["Pequeno", a]
+                      when "medium" then ["Médio", a]
+                      when "big"    then ["Grande", a]
+                      when "all"    then ["Todos", a]
+                      end
+                    },
+                    current_user.animal_sizes
+                  ),
+                  include_blank: "Selecione..."
+      %>
+    </div>
 
-    <%= f.label :backyard, "Backyard" %>
-    <%= f.check_box :backyard %>
+    <br>
 
-    <%= f.label :has_pet, "Has Pet" %>
-    <%= f.check_box :has_pet %>
+    <div class="d-flex justify-content-between">
+    <div>
+      <%= f.label :backyard, "Possui área externa" %>
+      <%= f.check_box :backyard %>
+    </div>
+    <div>
+      <%= f.label :has_pet, "Tem animais" %>
+      <%= f.check_box :has_pet %>
+    </div>
+    <div>
+      <%= f.label :screened_windows, "Janelas teladas" %>
+      <%= f.check_box :screened_windows %>
+    </div>
+    </div>
 
-    <%= f.label :screened_windows, "Screened Windows" %>
-    <%= f.check_box :screened_windows %>
+    <br>
 
-    <%= f.label :animal_sizes, "Accepts Animals of Size" %>
-    <%= f.select :animal_sizes, options_for_select(User::ANIMAL_SIZES.map { |a| [a.capitalize, a] }, current_user.animal_sizes), include_blank: "Select..." %>
-
-    <%= f.submit "Become a sitter", class: "btn btn-primary" %>
+    <div>
+      <button type="submit" class="btn btn-primary">
+        <i class="fa-solid fa-paw"></i> Torne-se um Cuidador
+      </button>
+    </div>
   <% end %>
 </div>
