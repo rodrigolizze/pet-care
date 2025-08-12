@@ -51,7 +51,10 @@
             <%= image_tag "https://via.placeholder.com/40", class: "avatar", alt: "dropdown menu" %>
           </a>
             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-              <%= link_to "Dashboard", sitter_users_path, class: "dropdown-item" %>
+            <!--   <%= link_to "Dashboard", sitter_users_path, class: "dropdown-item" %> -->
+              <% if current_user.sitter? %>
+                <%= link_to "Dashboard", sitter_users_path, class: "dropdown-item" %>
+              <% end %>
               <%= link_to "Datas disponíveis", new_availability_path, class: "dropdown-item" %>
               <%= link_to "Minhas reservas", bookings_path, class: "dropdown-item" %>
               <%= link_to "Desconectar", destroy_user_session_path, data: {turbo_method: :delete}, class: "dropdown-item" %>
