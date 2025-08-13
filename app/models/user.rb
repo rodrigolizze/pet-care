@@ -18,5 +18,6 @@ class User < ApplicationRecord
   validates :animal_sizes, inclusion: { in: ANIMAL_SIZES }, allow_nil: true
 
   validates :name, :cpf, :photo, :city, presence: true
-  validates :cpf, uniqueness: true
+  # validates :cpf, uniqueness: true
+  validates :cpf, uniqueness: { case_sensitive: false, scope: [], message: "já está em uso" }
 end

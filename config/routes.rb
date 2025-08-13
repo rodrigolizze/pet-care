@@ -18,6 +18,9 @@ Rails.application.routes.draw do
       get  "become_sitter", to: "users#become_sitter"    # form page
       post "become_sitter", to: "users#activate_sitter"  # submission
       get "sitter", to: "users#sitter_dashboard"
+      get  "edit_sitter",   to: "users#edit_sitter"
+      patch "update_sitter", to: "users#update_sitter"
+      
     end
   end
 
