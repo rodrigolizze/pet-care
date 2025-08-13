@@ -35,7 +35,7 @@ class UsersController < ApplicationController
     unless current_user.sitter?
       redirect_to root_path, alert: "You are not authorized to access this page."
       return
-  end
+    end
 
   # Example: fetch sitter's availabilities
   @availabilities = current_user.availabilities
