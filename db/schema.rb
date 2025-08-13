@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_08_11_190235) do
+ActiveRecord::Schema[7.1].define(version: 2025_08_13_000257) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -59,7 +59,9 @@ ActiveRecord::Schema[7.1].define(version: 2025_08_11_190235) do
     t.integer "pet_birth_year"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "group_token"
     t.index ["availability_id"], name: "index_bookings_on_availability_id", unique: true
+    t.index ["group_token"], name: "index_bookings_on_group_token"
     t.index ["user_id"], name: "index_bookings_on_user_id"
   end
 

@@ -10,7 +10,7 @@ Rails.application.routes.draw do
   get "how-it-works", to: "pages#how_it_works"
   get "work-with-us", to: "pages#work_with_us"
   get "privacy", to: "pages#privacy"
-  
+
   get "up" => "rails/health#show", as: :rails_health_check
 
   resources :users, only: :show do  # Add this to enable user profile pages
@@ -24,8 +24,12 @@ Rails.application.routes.draw do
   resources :availabilities, only: [:index, :new, :create, :destroy] do
     resources :bookings, only: [:new, :create, :destroy]
   end
-  
-  resources :bookings, only: [:index]   # /bookings (Minhas Reservas)
+
+  resources :bookings, only: [:index] do
+    collection do #..
+      post :bulk_create #..
+    end
+  end  # /bookings (Minhas Reservas)
 
   get "bookings/available_dates", to: "bookings#available_dates", as: :available_dates
 

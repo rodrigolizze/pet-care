@@ -1,4 +1,10 @@
 <div class="container py-3">
+  <% if flash[:notice].present? %>
+    <div class="alert alert-success"><%= flash[:notice] %></div>
+  <% end %>
+  <% if flash[:alert].present? %>
+    <div class="alert alert-danger"><%= flash[:alert] %></div>
+  <% end %>
 
   <!-- Header / Profile card -->
   <div class="card shadow-sm mb-4">
@@ -18,55 +24,147 @@
     </div>
   </div>
 
-  <!-- Availabilities -->
-  <div class="d-flex justify-content-between align-items-center mb-2">
-    <h2 class="h5 m-0">Datas disponíveis</h2>
-  </div>
+  <!-- Bulk booking form -->
+  <% if user_signed_in? && current_user != @user %>
+    <div class="card shadow-sm mb-4">
+      <div class="card-body">
+        <h2 class="h6 mb-3">Reservar por período</h2>
+        <%= form_with url: bulk_create_bookings_path, method: :post, local: true, class: "row g-3" do %>
+          <%= hidden_field_tag :sitter_id, @user.id %>
 
-  <% if @availabilities.any? %>
-    <ul class="list-group shadow-sm">
-      <% @availabilities.each do |availability| %>
-        <li class="list-group-item d-flex justify-content-between align-items-start">
-          <div class="me-3">
-            <div class="fw-semibold"><%= availability.date.strftime("%d/%m/%Y") %></div>
-
-            <% if availability.booking.present? %>
-              <% b = availability.booking %>
-              <div class="mt-2 small text-muted">
-                <div class="mb-1">
-                  <span class="badge text-bg-secondary">Reservado</span>
-                </div>
-                <div><em>Cliente:</em> <%= b.user.name %> (<%= b.user.email %>)</div>
-                <div>
-                  <em>Pet:</em>
-                  <%= b.pet_name %> — <%= b.animal_type %>, <%= b.pet_size %>, nasc. <%= b.pet_birth_year %>
-                </div>
-              </div>
-            <% end %>
+          <div class="col-12 col-md-3">
+            <%= label_tag :start_date, "Início", class: "form-label" %>
+            <%= date_field_tag :start_date, nil, min: Date.current, class: "form-control" %>
           </div>
 
-          <div class="text-end">
-            <% if availability.booking.present? %>
-              <% b = availability.booking %>
-              <% if current_user == @user || current_user == b.user %>
-                <%= button_to "Cancelar reserva",
-                              availability_booking_path(availability, b),
-                              method: :delete,
-                              data: { confirm: "Tem certeza que deseja cancelar?" },
-                              class: "btn btn-outline-danger btn-sm" %>
-              <% end %>
-            <% else %>
-              <%= link_to "Reservar",
-                          new_availability_booking_path(availability),
-                          class: "btn btn-primary btn-sm" %>
-                          <%= link_to "Voltar", root_path, class: "btn btn-outline-secondary btn-sm" %>
-            <% end %>
+          <div class="col-12 col-md-3">
+            <%= label_tag :end_date, "Término", class: "form-label" %>
+            <%= date_field_tag :end_date, nil, min: Date.current, class: "form-control" %>
           </div>
-        </li>
-      <% end %>
-    </ul>
-  <% else %>
-    <div class="alert alert-secondary">Este cuidador não possui datas disponíveis.</div>
+
+          <div class="col-12 col-md-3">
+            <%= label_tag :pet_name, "Nome do Pet", class: "form-label" %>
+            <%= text_field_tag :pet_name, nil, class: "form-control" %>
+          </div>
+
+          <div class="col-12 col-md-3">
+            <%= label_tag :animal_type, "Tipo", class: "form-label" %>
+            <%= select_tag :animal_type,
+                  options_for_select([["Cachorro","Cachorro"],["Gato","Gato"],["Coelho","Coelho"],["Pássaro","Pássaro"]]),
+                  class: "form-select" %>
+          </div>
+
+          <div class="col-12 col-md-3">
+            <%= label_tag :pet_size, "Tamanho", class: "form-label" %>
+            <%= select_tag :pet_size,
+                  options_for_select([["Pequeno","Pequeno"],["Médio","Médio"],["Grande","Grande"]]),
+                  class: "form-select" %>
+          </div>
+
+          <div class="col-12 col-md-3">
+            <%= label_tag :pet_birth_year, "Ano nasc.", class: "form-label" %>
+            <%= number_field_tag :pet_birth_year, nil, in: 2000..Date.current.year, class: "form-control" %>
+          </div>
+
+          <div class="col-12 d-flex gap-2">
+            <%= submit_tag "Reservar período", class: "btn btn-success" %>
+            <span class="text-muted small align-self-center">Reservas serão criadas apenas para dias livres no período.</span>
+          </div>
+        <% end %>
+      </div>
+    </div>
   <% end %>
 
+<!-- Calendar of future availability (no booking buttons for free days) -->
+<div class="d-flex justify-content-between align-items-center mb-2">
+  <h2 class="h5 m-0">Calendário de Disponibilidade</h2>
+</div>
+
+<% availability_by_date = @availabilities.index_by(&:date) %>
+
+<% months = [Date.current.beginning_of_month,
+             (Date.current + 1.month).beginning_of_month,
+             (Date.current + 2.months).beginning_of_month] %>
+
+<div class="row g-3">
+  <% months.each do |month_start| %>
+    <% month_end   = month_start.end_of_month %>
+    <% first_wday  = month_start.wday %>
+    <% days_in_mon = (month_start..month_end).to_a %>
+
+    <div class="col-12 col-md-4">
+      <div class="card shadow-sm h-100">
+        <div class="card-header text-center">
+          <strong><%= I18n.l(month_start, format: "%B de %Y") %></strong>
+        </div>
+        <div class="card-body p-0">
+          <table class="table table-sm m-0 text-center align-middle">
+            <thead class="table-light">
+              <tr>
+                <th class="small">D</th><th class="small">S</th><th class="small">T</th>
+                <th class="small">Q</th><th class="small">Q</th><th class="small">S</th><th class="small">S</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <% first_wday.times do %>
+                  <td class="text-muted small" style="height:52px;"></td>
+                <% end %>
+
+                <% days_in_mon.each do |day| %>
+                  <% av     = availability_by_date[day] %>
+                  <% booked = av&.booking.present? %>
+                  <% past   = day < Date.current %>
+
+                  <td style="height:52px; vertical-align:top;">
+                    <div class="d-flex flex-column align-items-center">
+                      <div class="fw-semibold"><%= day.day %></div>
+
+                      <% if av.nil? || past %>
+                        <span class="badge text-bg-light mt-1">—</span>
+
+                      <% elsif booked %>
+                        <% b = av.booking %>
+                        <span class="badge text-bg-secondary mt-1">Reservado</span>
+
+                        <%# show Cancelar button ONLY if sitter (owner) or the booking client %>
+                        <% if user_signed_in? && (current_user == @user || current_user == b.user) %>
+                          <% batch_size = Booking.where(group_token: b.group_token).count if b.group_token.present? %>
+                          <div class="mt-1">
+                            <%= button_to (b.group_token.present? && batch_size.to_i > 1 ? "Cancelar" : "Cancelar"),
+                                  availability_booking_path(av, b),
+                                  method: :delete,
+                                  data: { confirm: "Cancelar #{b.group_token.present? && batch_size.to_i > 1 ? 'todas as reservas do período' : 'esta reserva'}?" },
+                                  class: "btn btn-outline-danger btn-xs btn-sm px-2 py-0" %>
+                          </div>
+                        <% end %>
+
+                      <% else %>
+                        <span class="badge text-bg-success mt-1">Livre</span>
+                        <%# No reservar button here on purpose (bulk form handles booking) %>
+                      <% end %>
+                    </div>
+                  </td>
+
+                  <% # Break row on Saturdays if more days remain %>
+                  <% if day.wday == 6 && (day != month_end) %>
+                    </tr><tr>
+                  <% end %>
+                <% end %>
+
+                <% last_wday = month_end.wday %>
+                <% (6 - last_wday).times do %>
+                  <td class="text-muted small" style="height:52px;"></td>
+                <% end %>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="card-footer small text-muted">
+          <span class="badge text-bg-success">Livre</span> Disponível -
+          <span class="badge text-bg-secondary">Reservado</span> Indisponível
+        </div>
+      </div>
+    </div>
+  <% end %>
 </div>
