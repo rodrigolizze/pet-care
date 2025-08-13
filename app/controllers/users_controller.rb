@@ -30,6 +30,18 @@ class UsersController < ApplicationController
     end
   end
 
+  def edit_sitter
+    render :become_sitter
+  end
+
+  def update_sitter
+    if current_user.update(user_params)
+      redirect_to sitter_users_path, notice: "Informações atualizadas com sucesso!"
+    else
+      render :edit_sitter, status: :unprocessable_entity
+    end
+  end
+
 
   def sitter_dashboard
     unless current_user.sitter?
@@ -46,7 +58,7 @@ class UsersController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:name, :birth_date, :cpf, :email, :address, :bio, :experience, :photo, :property_type, :property_type, :backyard, :has_pet, :screened_windows, :animal_sizes,)
+    params.require(:user).permit(:bio, :experience, :property_type, :backyard, :has_pet, :screened_windows, :animal_sizes)
   end
 
 end
