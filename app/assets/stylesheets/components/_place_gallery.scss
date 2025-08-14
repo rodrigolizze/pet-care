@@ -1,0 +1,16 @@
+.gallery {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.gallery-item {
+  text-align: center;
+  width: 150px;
+}
+.img-thumbnail {
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+.img-thumbnail:hover {
+  transform: scale(1.05);
+}

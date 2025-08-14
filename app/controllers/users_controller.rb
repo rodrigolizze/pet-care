@@ -55,10 +55,27 @@ class UsersController < ApplicationController
   # This view will allow them to add new available dates
   end
 
+  def remove_place_photo
+    photo = current_user.place_photos.find(params[:id])
+    photo.purge # This will remove it from Cloudinary + DB
+    redirect_to sitter_users_path, notice: "Photo removed successfully."
+  end
+
+
+
   private
 
   def user_params
-    params.require(:user).permit(:bio, :experience, :property_type, :backyard, :has_pet, :screened_windows, :animal_sizes)
+    params.require(:user).permit(
+      :bio,
+      :experience, 
+      :property_type, 
+      :backyard, 
+      :has_pet, 
+      :screened_windows, 
+      :animal_sizes,
+      place_photos: []
+    )
   end
 
 end
