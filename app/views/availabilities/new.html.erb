@@ -1,32 +1,66 @@
 <div class="container py-3">
-  <h1 class="mb-4">Nova Disponibilidade</h1>
+  <div class="d-flex align-items-center justify-content-between mb-3">
+    <h1 class="ps-title m-0 text-gradient-emerald">Nova Disponibilidade</h1>
+    <span class="ps-chip chip-emerald d-none d-md-inline">Criar por intervalo</span>
+  </div>
 
-  <div class="card shadow-sm">
+  <div class="ps-card shadow-sm border-0">
+    <div class="ps-card-header bg-soft-emerald">
+      <div class="d-flex align-items-center gap-2">
+        <div class="pill-accent pill-emerald"></div>
+        <h2 class="h6 m-0 text-muted">Informe um período de datas</h2>
+      </div>
+      <small class="text-muted">Uma disponibilidade será criada <strong>para cada dia</strong></small>
+    </div>
+
     <div class="card-body">
       <% if alert.present? %>
-        <div class="alert alert-danger"><%= alert %></div>
+        <div class="alert alert-danger mb-3"><%= alert %></div>
       <% end %>
 
-      <p class="text-muted small mb-4">
-        Selecione um período. Criaremos uma disponibilidade para <em>cada dia</em> dentro do intervalo.
-      </p>
-
       <%= form_with url: availabilities_path, method: :post, local: true, class: "row g-3" do %>
+        <!-- Data de início -->
         <div class="col-12 col-md-6">
-          <%= label_tag :start_date, "Data de início", class: "form-label" %>
-          <%= date_field_tag :start_date, params[:start_date], min: Date.current, class: "form-control" %>
+          <%= label_tag :start_date, "Data de início", class: "form-label fw-semibold" %>
+          <div class="input-group">
+            <span class="input-group-text bg-white"><i class="bi bi-calendar-event"></i></span>
+            <%= date_field_tag :start_date,
+                               params[:start_date],
+                               min: Date.current,
+                               class: "form-control",
+                               required: true %>
+          </div>
           <div class="form-text">A partir de hoje.</div>
         </div>
 
+        <!-- Data de término -->
         <div class="col-12 col-md-6">
-          <%= label_tag :end_date, "Data de término", class: "form-label" %>
-          <%= date_field_tag :end_date, params[:end_date], min: Date.current, class: "form-control" %>
+          <%= label_tag :end_date, "Data de término", class: "form-label fw-semibold" %>
+          <div class="input-group">
+            <span class="input-group-text bg-white"><i class="bi bi-calendar-check"></i></span>
+            <%= date_field_tag :end_date,
+                               params[:end_date],
+                               min: Date.current,
+                               class: "form-control",
+                               required: true %>
+          </div>
           <div class="form-text">Inclui o dia final.</div>
         </div>
 
-        <div class="col-12 d-flex gap-2 pt-2">
-          <%= submit_tag "Criar disponibilidades", class: "btn btn-success" %>
-          <%= link_to "Cancelar", availabilities_path, class: "btn btn-outline-secondary" %>
+        <!-- Dica visual -->
+        <div class="col-12">
+          <div class="alert alert-light border d-flex align-items-center gap-2 mb-0" role="note" style="border-color: var(--ps-border);">
+            <i class="bi bi-info-circle text-success"></i>
+            <div>
+              Se o intervalo tiver <strong>5 dias</strong>, serão geradas <strong>5 disponibilidades</strong>.
+            </div>
+          </div>
+        </div>
+
+        <!-- Ações -->
+        <div class="col-12 d-flex flex-wrap gap-2 pt-2">
+          <%= submit_tag "Criar disponibilidades", class: "btn btn-ps" %>
+          <%= link_to "Cancelar", availabilities_path, class: "btn btn-outline-secondary rounded-pill" %>
         </div>
       <% end %>
     </div>
