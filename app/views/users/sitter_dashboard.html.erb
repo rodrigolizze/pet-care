@@ -84,6 +84,32 @@
       <p><strong>Janelas teladas:</strong> 
         <%= current_user.screened_windows ? "Sim" : "Não" %>
       </p>
+
+      <% if current_user.place_photos.attached? %>
+        <div class="gallery">
+          <% current_user.place_photos.each do |photo| %>
+            <div class="gallery-item">
+              <!-- Thumbnail -->
+              <%= image_tag url_for(photo), class: "img-thumbnail", data: { bs_toggle: "modal", bs_target: "#photoModal#{photo.id}" } %>
+
+              <!-- Modal -->
+              <div class="modal fade" id="photoModal<%= photo.id %>" tabindex="-1" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                  <div class="modal-content">
+                    <div class="modal-body">
+                      <%= image_tag url_for(photo), class: "img-fluid" %>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Remove Button -->
+              <%= button_to "Remove", remove_place_photo_users_path(photo.id), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger btn-sm mt-2" %>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
+
     </div>
     <%= link_to "✏️ Editar informações", edit_sitter_users_path, class: "btn btn-primary" %>
   </div>

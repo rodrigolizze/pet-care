@@ -8,6 +8,7 @@ class User < ApplicationRecord
   has_many :availabilities, dependent: :destroy
   has_many :bookings, dependent: :destroy
   has_one_attached :photo
+  has_many_attached :place_photos
 
   # Roles: sitter or client
   # enum role: { client: 'client', sitter: 'sitter' }

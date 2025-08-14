@@ -52,7 +52,10 @@
       <%= f.check_box :screened_windows %>
     </div>
   </div>
-
+    <div>
+      <%= f.label :place_photos, "Fotos do local" %>
+      <%= f.file_field :place_photos, multiple: true, class: "form-control" %>
+    </div>
   <br>
 
   <div>
