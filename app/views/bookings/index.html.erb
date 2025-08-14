@@ -15,18 +15,27 @@
                 <th style="width: 120px;">Data</th>
                 <th>Cuidador</th>
                 <th>Pet</th>
-                <th style="width: 140px;">Ações</th>
+                <th style="width: 160px;">Ações</th>
               </tr>
             </thead>
             <tbody>
               <% @my_bookings.each do |b| %>
+                <% sitter = b.availability.user %>
                 <tr>
                   <td class="fw-semibold"><%= b.availability.date.strftime("%d/%m/%Y") %></td>
-                  <td><%= b.availability.user.name %></td>
+                  <td><%= sitter.name %></td>
                   <td class="text-muted">
                     <%= "#{b.pet_name} — #{b.animal_type}, #{b.pet_size}, nasc. #{b.pet_birth_year}" %>
                   </td>
-                  <td>
+                  <td class="d-flex gap-2">
+                    <%= link_to wa_link_for(sitter, b, as: :client),
+                                class: "btn btn-success btn-sm rounded-circle p-2",
+                                target: "_blank",
+                                rel: "noopener",
+                                title: "Conversar no WhatsApp" do %>
+                      <i class="bi bi-whatsapp me-1"></i>
+                    <% end %>
+
                     <%= button_to "Cancelar",
                           availability_booking_path(b.availability, b),
                           method: :delete,
@@ -60,18 +69,27 @@
                 <th style="width: 120px;">Data</th>
                 <th>Cliente</th>
                 <th>Pet</th>
-                <th style="width: 140px;">Ações</th>
+                <th style="width: 160px;">Ações</th>
               </tr>
             </thead>
             <tbody>
               <% @received_bookings.each do |b| %>
+                <% client = b.user %>
                 <tr>
                   <td class="fw-semibold"><%= b.availability.date.strftime("%d/%m/%Y") %></td>
-                  <td><%= b.user.name %> <span class="text-muted">(<%= b.user.email %>)</span></td>
+                  <td><%= client.name %> <span class="text-muted">(<%= client.email %>)</span></td>
                   <td class="text-muted">
                     <%= "#{b.pet_name} — #{b.animal_type}, #{b.pet_size}, nasc. #{b.pet_birth_year}" %>
                   </td>
-                  <td>
+                  <td class="d-flex gap-2">
+                    <%= link_to wa_link_for(client, b, as: :sitter),
+                                class: "btn btn-success btn-sm rounded-circle p-2",
+                                target: "_blank",
+                                rel: "noopener",
+                                title: "Conversar no WhatsApp" do %>
+                      <i class="bi bi-whatsapp me-1"></i>
+                    <% end %>
+
                     <%= button_to "Cancelar",
                           availability_booking_path(b.availability, b),
                           method: :delete,
