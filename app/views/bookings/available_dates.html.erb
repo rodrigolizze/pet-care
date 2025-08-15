@@ -1,31 +1,47 @@
 <div class="container py-3">
   <div class="d-flex justify-content-between align-items-center mb-3">
-    <h1 class="m-0">Disponibilidades de Cuidadores</h1>
-    <%# Optional: add a link back home %>
-    <%#= link_to "Voltar", root_path, class: "btn btn-outline-secondary btn-sm" %>
+    <h1 class="ps-title m-0 text-gradient-indigo">Disponibilidades de Cuidadores</h1>
+    <%# Optional: voltar %>
+    <%#= link_to "Voltar", root_path, class: "btn btn-outline-secondary rounded-pill btn-sm" %>
   </div>
 
-  <div class="card shadow-sm">
+  <div class="ps-card shadow-sm border-0">
+    <div class="ps-card-header bg-soft-indigo">
+      <div class="d-flex align-items-center gap-2">
+        <div class="pill-accent pill-indigo"></div>
+        <h2 class="h6 m-0 text-muted">Escolha uma data e conheça o cuidador</h2>
+      </div>
+      <span class="ps-chip chip-indigo">Explorar datas</span>
+    </div>
+
     <div class="card-body p-0">
       <% if @availabilities.any? %>
         <div class="table-responsive">
-          <table class="table table-striped table-hover align-middle m-0">
-            <thead class="table-light">
+          <table class="table ps-table table-hover align-middle m-0">
+            <thead class="table-tint-indigo">
               <tr>
                 <th style="width: 200px;">Data</th>
                 <th>Cuidador</th>
-                <th style="width: 140px;"></th>
+                <th style="width: 160px;">Ações</th>
               </tr>
             </thead>
             <tbody>
               <% @availabilities.each do |availability| %>
-                <tr>
-                  <td class="fw-semibold"><%= l(availability.date, format: :long) %></td>
-                  <td><%= availability.user.name %></td>
+                <tr class="row-hover-indigo">
+                  <td class="fw-semibold">
+                    <%= l(availability.date, format: :long) %>
+                  </td>
                   <td>
-                    <%= link_to "Ver Perfil",
-                                user_path(availability.user),
-                                class: "btn btn-outline-primary btn-sm" %>
+                    <i class="bi bi-person-circle me-1 text-muted"></i>
+                    <%= availability.user.name %>
+                  </td>
+                  <td class="d-flex align-items-center gap-2">
+                    <%= link_to user_path(availability.user),
+                                class: "btn btn-ps btn-sm rounded-pill d-flex align-items-center gap-2",
+                                title: "Ver perfil do cuidador" do %>
+                      <i class="bi bi-person-lines-fill"></i>
+                      <span>Ver Perfil</span>
+                    <% end %>
                   </td>
                 </tr>
               <% end %>

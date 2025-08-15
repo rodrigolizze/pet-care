@@ -1,71 +1,74 @@
 <div class="navbar navbar-expand-sm navbar-light navbar-lewagon">
   <div class="container-fluid">
     <%= link_to root_path, class: "navbar-brand" do %>
-      <%= image_tag "logo_horizontal.png" %>
+      <%= image_tag "logo_horizontal.png" %> <%# logo size/quality unchanged %>
     <% end %>
 
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
 
+    <%# --- Search block only on the home page (ignores query params) --- %>
+    <% if request.path == root_path %>
+      <div class="container mt-4 nav-search">
+        <div class="row justify-content-center">
+          <div class="col-lg-10">
+            <h1 class="mb-3 ps-title text-gradient-emerald">Encontre um Pet Sitter</h1>
 
-<div class="container mt-4">
-  <div class="row justify-content-center">
-    <div class="col-lg-10">
-      <h1 class="mb-4">Encontre um Pet Sitter</h1>
+            <%= simple_form_for :search, url: root_path, method: :get, html: { class: 'row g-2 align-items-end' } do |f| %>
+              <div class="col-md-3">
+                <%= f.input :city, label: false, placeholder: "Onde o seu pet ficará?", wrapper: false,
+                            input_html: { value: params.dig(:search, :city), class: 'form-control' } %>
+              </div>
 
-        <%= simple_form_for :search, url: root_path, method: :get, html: { class: 'row g-2 align-items-end' } do |f| %>
-          <div class="col-md-3">
-            <%= f.input :city, label: false, placeholder: "Onde o seu pet ficará?", wrapper: false, input_html: { value: params.dig(:search, :city), class: 'form-control' } %>
+              <div class="col-md-2">
+                <%= f.input :start_date, label: false, wrapper: false, placeholder: "Check-in",
+                            input_html: { type: 'date', value: params.dig(:search, :start_date), class: 'form-control' } %>
+              </div>
+
+              <div class="col-md-2">
+                <%= f.input :end_date, label: false, wrapper: false, placeholder: "Check-out",
+                            input_html: { type: 'date', value: params.dig(:search, :end_date), class: 'form-control' } %>
+              </div>
+
+              <div class="col-md-2">
+                <div class="d-grid h-100">
+                  <%= f.button :submit, "Buscar", class: "btn btn-ps h-100" %>
+                </div>
+              </div>
+            <% end %>
           </div>
-
-          <div class="col-md-2">
-            <%= f.input :start_date, label: false, wrapper: false, placeholder: "Check-in", input_html: { type: 'date', value: params.dig(:search, :start_date), class: 'form-control' } %>
-          </div>
-
-          <div class="col-md-2">
-            <%= f.input :end_date, label: false, wrapper: false, placeholder: "Check-out", input_html: { type: 'date', value: params.dig(:search, :end_date), class: 'form-control' } %>
-          </div>
-
-          <div class="col-md-2">
-            <div class="d-grid h-100">
-              <%= f.button :submit, "Buscar", class: "btn btn-primary h-100" %>
-            </div>
-          </div>
-        <% end %>
-    </div>
-  </div>
-</div>
+        </div>
+      </div>
+    <% end %>
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto">
         <% if user_signed_in? %>
           <li class="nav-item">
-            <!-- <%= link_to  become_sitter_users_path, class: "nav-link" do %>
-              <i class="fa-solid fa-house"></i> Quero ser sitter
-            <% end %> -->
-              <% if current_user.sitter? %>
-                <%= link_to sitter_users_path, class: "nav-link" do %>
-                  <i class="fa-solid fa-house"></i> Dashboard
-                <% end %>
-              <% else %>
-                <%= link_to become_sitter_users_path, class: "nav-link" do %>
-                  <i class="fa-solid fa-house"></i> Quero ser sitter
-                <% end %>
+            <% if current_user.sitter? %>
+              <%= link_to sitter_users_path, class: "nav-link" do %>
+                <i class="fa-solid fa-house"></i> Dashboard
               <% end %>
+            <% else %>
+              <%= link_to become_sitter_users_path, class: "nav-link" do %>
+                <i class="fa-solid fa-house"></i> Quero ser sitter
+              <% end %>
+            <% end %>
           </li>
+
           <li class="nav-item dropdown">
-          <a href="#" class="avatar" id="navbarDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <%= cl_image_tag current_user.photo.key, class: "avatar", alt: "dropdown menu" %>
+            <a href="#" class="avatar" id="navbarDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <%= cl_image_tag current_user.photo.key, class: "avatar", alt: "dropdown menu" %> <%# stays round as you have it %>
             </a>
             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-            <!--   <%= link_to "Dashboard", sitter_users_path, class: "dropdown-item" %> -->
               <% if current_user.sitter? %>
                 <%= link_to "Dashboard", sitter_users_path, class: "dropdown-item" %>
               <% end %>
               <%= link_to "Datas disponíveis", new_availability_path, class: "dropdown-item" %>
               <%= link_to "Minhas reservas", bookings_path, class: "dropdown-item" %>
-              <%= link_to "Desconectar", destroy_user_session_path, data: {turbo_method: :delete}, class: "dropdown-item" %>
+              <%= link_to "Desconectar", destroy_user_session_path, data: { turbo_method: :delete }, class: "dropdown-item" %>
             </div>
           </li>
         <% else %>

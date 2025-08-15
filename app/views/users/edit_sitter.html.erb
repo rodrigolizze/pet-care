@@ -1,1 +1,11 @@
-<%= render 'sitter_form' %>
+<% title_text = "Editar informações do Cuidador" %>
+<div class="container py-4" style="max-width: 900px;">
+  <div class="card shadow-sm border-0">
+    <div class="card-header bg-light">
+      <h1 class="h4 m-0"><%= title_text %></h1>
+    </div>
+    <div class="card-body p-4">
+      <%= render "sitter_form" %>
+    </div>
+  </div>
+</div>
