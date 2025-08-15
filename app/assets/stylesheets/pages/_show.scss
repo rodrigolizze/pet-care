@@ -352,3 +352,37 @@ body {
     margin-top: 20px;
   }
 }
+
+
+.calendar-container {
+  font-size: 0.9em; /* Diminui a fonte do calendário */
+}
+
+.calendar-header h4 {
+  font-size: 1rem; /* Ajusta a fonte do cabeçalho */
+}
+
+.calendar-cell {
+  padding: 0 !important; /* Remove o padding da célula da tabela */
+}
+
+.calendar-day {
+  padding: 0.25rem; /* Ajusta o padding interno do dia */
+  min-height: 40px; /* Reduz a altura mínima para ser mais compacto */
+}
+
+.day-number {
+  font-size: 0.8em; /* Diminui o tamanho do número do dia */
+  font-weight: bold;
+}
+
+.table-sm th,
+.table-sm td {
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+}
+
+.status-badge {
+  font-size: 0.6em; /* Diminui a fonte dos status 'Livre'/'Reservado' */
+  padding: 0.1em 0.4em;
+}

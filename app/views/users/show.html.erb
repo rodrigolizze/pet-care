@@ -1,163 +1,274 @@
 <div class="container py-3">
-  <!-- Flash Messages -->
-  <div>
-  <% if flash[:notice].present? %>
-    <div class="alert alert-success alert-dismissible fade show">
-      <i class="bi bi-check-circle me-2"></i>
-      <%= flash[:notice] %>
-      <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-    </div>
+  <div class="row">
+
+    <!-- COLUNA ESQUERDA -->
+    <div class="col-lg-8">
+
+      <!-- Flash Messages -->
+      <% if flash[:notice].present? %>
+        <div class="alert alert-success alert-dismissible fade show">
+          <i class="bi bi-check-circle me-2"></i>
+          <%= flash[:notice] %>
+          <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+      <% end %>
+      <% if flash[:alert].present? %>
+        <div class="alert alert-danger alert-dismissible fade show">
+          <i class="bi bi-exclamation-triangle me-2"></i>
+          <%= flash[:alert] %>
+          <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+      <% end %>
+
+      <!-- Profile Header -->
+      <div class="profile-header">
+        <div class="d-flex align-items-center">
+<div class="profile-avatar">
+  <% if @user.photo.attached? %>
+    <%= cl_image_tag(
+          @user.photo.key,
+          crop: :fill, gravity: :face,
+          fetch_format: :auto, quality: :auto,
+          class: "w-100 h-100 rounded-circle",
+          alt: "Foto de #{@user.name}"
+        ) %>
+  <% else %>
+    <%= cl_image_tag(
+          "c5ldsjbxtnqcwksfgsn0", # seu public_id default
+          crop: :fill, gravity: :face,
+          fetch_format: :auto, quality: :auto,
+          class: "w-100 h-100 rounded-circle",
+          alt: "Foto de #{@user.name}"
+        ) %>
   <% end %>
-  <% if flash[:alert].present? %>
-    <div class="alert alert-danger alert-dismissible fade show">
-      <i class="bi bi-exclamation-triangle me-2"></i>
-      <%= flash[:alert] %>
-      <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-    </div>
-  <% end %>
-
-  <!-- Profile Header -->
-  <div class="profile-header">
-    <div class="d-flex align-items-center">
-      <div class="profile-avatar">
-        <span><%= @user.name.to_s.first&.upcase %></span>
-      </div>
-      <div class="flex-grow-1">
-        <div class="d-flex align-items-center gap-3 mb-2 flex-wrap">
-          <h1 class="h3 mb-0"><%= @user.name %></h1>
-          <span class="verified-badge">
-            <i class="bi bi-patch-check me-1"></i>
-            Cuidador Verificado
-          </span>
-        </div>
-        <div class="d-flex flex-wrap gap-4 text-muted">
-          <span><i class="bi bi-geo-alt me-1"></i><%= @user.address %></span>
-          <span><i class="bi bi-envelope me-1"></i><%= @user.email %></span>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="row g-4">
-    <!-- Profile Info -->
-    <div class="col-12 col-lg-6">
-      <div class="card-modern h-100">
-        <div class="card-header-modern">
-          <h3 class="h5 mb-0">
-            <i class="bi bi-person me-2"></i>
-            Sobre o Cuidador
-          </h3>
-        </div>
-        <div class="card-body-modern">
-          <div class="info-item">
-            <i class="bi bi-chat-text info-icon"></i>
-            <div>
-              <strong>Bio:</strong>
-              <div class="mt-1"><%= @user.bio.presence || "Nenhuma bio fornecida." %></div>
+</div>
+          <div class="flex-grow-1">
+            <div class="d-flex align-items-center gap-3 mb-2 flex-wrap">
+              <h1 class="h3 mb-0"><%= @user.name %></h1>
+              <span class="verified-badge">
+                <i class="bi bi-patch-check me-1"></i>
+                Cuidador Verificado
+              </span>
             </div>
-          </div>
-          <div class="info-item">
-            <i class="bi bi-award info-icon"></i>
-            <div>
-              <strong>Experiência:</strong>
-              <div class="mt-1"><%= @user.experience.presence || "Nenhuma experiência informada." %></div>
-            </div>
-          </div>
-          <div class="info-item">
-            <i class="bi bi-geo-alt info-icon"></i>
-            <div>
-              <strong>Cidade:</strong>
-              <div class="mt-1"><%= @user.city.presence || "Não informada" %></div>
+            <div class="d-flex flex-wrap gap-4 text-muted">
+              <span><i class="bi bi-geo-alt me-1"></i><%= @user.address %></span>
+              <span><i class="bi bi-envelope me-1"></i><%= @user.email %></span>
             </div>
           </div>
         </div>
       </div>
-    </div>
 
-    <!-- Accommodation Info -->
-    <div class="col-12 col-lg-6">
-      <div class="card-modern h-100">
-        <div class="card-header-modern">
-          <h3 class="h5 mb-0">
-            <i class="bi bi-house-door me-2"></i>
-            Como é a Hospedagem
-          </h3>
-        </div>
-        <div class="card-body-modern">
-          <% size_map = { "small" => "Pequeno", "medium" => "Médio", "big" => "Grande", "all" => "Todos os portes" } %>
-          <% size_label = size_map[@user.animal_sizes] || "Não informado" %>
-
-          <div class="info-item">
-            <i class="bi bi-building info-icon"></i>
-            <div>
-              <strong>Moro em:</strong>
-              <div class="mt-1"><%= @user.property_type == "house" ? "Casa" : (@user.property_type == "apartment" ? "Apartamento" : "Não informado") %></div>
+      <div class="row g-4">
+        <!-- Profile Info -->
+        <div class="col-12 col-lg-6">
+          <div class="card-modern h-100">
+            <div class="card-header-modern">
+              <h3 class="h5 mb-0">
+                <i class="bi bi-person me-2"></i>
+                Sobre o Cuidador
+              </h3>
             </div>
-          </div>
-          <div class="info-item">
-            <i class="bi bi-rulers info-icon"></i>
-            <div>
-              <strong>Aceito animais de porte:</strong>
-              <div class="mt-1"><%= size_label %></div>
-            </div>
-          </div>
-          <div class="info-item">
-            <i class="bi bi-tree info-icon"></i>
-            <div>
-              <strong>Possui área externa:</strong>
-              <div class="mt-1"><%= @user.backyard ? "Sim" : "Não" %></div>
-            </div>
-          </div>
-          <div class="info-item">
-            <i class="bi bi-heart info-icon"></i>
-            <div>
-              <strong>Tem outros animais:</strong>
-              <div class="mt-1"><%= @user.has_pet ? "Sim" : "Não" %></div>
-            </div>
-          </div>
-          <div class="info-item">
-            <i class="bi bi-shield-check info-icon"></i>
-            <div>
-              <strong>Janelas teladas:</strong>
-              <div class="mt-1"><%= @user.screened_windows ? "Sim" : "Não" %></div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Photo Gallery -->
-  <% if @user.place_photos.attached? %>
-    <div class="card-modern mt-4">
-      <div class="card-header-modern">
-        <h3 class="h5 mb-0">
-          <i class="bi bi-images me-2"></i>
-          Fotos do Espaço
-        </h3>
-      </div>
-      <div class="card-body-modern">
-        <div class="photo-gallery">
-          <% @user.place_photos.each do |photo| %>
-            <div class="photo-item">
-              <div class="photo-wrapper">
-                <%= image_tag url_for(photo),
-                      class: "img-fluid",
-                      data: { bs_toggle: "modal", bs_target: "#photoModal#{photo.id}" } %>
+            <div class="card-body-modern">
+              <div class="info-item">
+                <i class="bi bi-chat-text info-icon"></i>
+                <div>
+                  <strong>Bio:</strong>
+                  <div class="mt-1"><%= @user.bio.presence || "Nenhuma bio fornecida." %></div>
+                </div>
               </div>
-              <div class="photo-controls">
-                <span class="text-muted small">Clique para ampliar</span>
+              <div class="info-item">
+                <i class="bi bi-award info-icon"></i>
+                <div>
+                  <strong>Experiência:</strong>
+                  <div class="mt-1"><%= @user.experience.presence || "Nenhuma experiência informada." %></div>
+                </div>
+              </div>
+              <div class="info-item">
+                <i class="bi bi-geo-alt info-icon"></i>
+                <div>
+                  <strong>Cidade:</strong>
+                  <div class="mt-1"><%= @user.city.presence || "Não informada" %></div>
+                </div>
               </div>
             </div>
+          </div>
+        </div>
 
-            <!-- Modal -->
-            <div class="modal fade" id="photoModal<%= photo.id %>" tabindex="-1" aria-hidden="true">
-              <div class="modal-dialog modal-dialog-centered modal-lg">
-                <div class="modal-content">
-                  <div class="modal-body p-0">
-                    <%= image_tag rails_blob_path(photo, disposition: "inline"), class: "img-fluid" %>
+        <!-- Accommodation Info -->
+        <div class="col-12 col-lg-6">
+          <div class="card-modern h-100">
+            <div class="card-header-modern">
+              <h3 class="h5 mb-0">
+                <i class="bi bi-house-door me-2"></i>
+                Como é a Hospedagem
+              </h3>
+            </div>
+            <div class="card-body-modern">
+              <% size_map = { "small" => "Pequeno", "medium" => "Médio", "big" => "Grande", "all" => "Todos os portes" } %>
+              <% size_label = size_map[@user.animal_sizes] || "Não informado" %>
 
+              <div class="info-item">
+                <i class="bi bi-building info-icon"></i>
+                <div>
+                  <strong>Moro em:</strong>
+                  <div class="mt-1"><%= @user.property_type == "house" ? "Casa" : (@user.property_type == "apartment" ? "Apartamento" : "Não informado") %></div>
+                </div>
+              </div>
+              <div class="info-item">
+                <i class="bi bi-rulers info-icon"></i>
+                <div>
+                  <strong>Aceito animais de porte:</strong>
+                  <div class="mt-1"><%= size_label %></div>
+                </div>
+              </div>
+              <div class="info-item">
+                <i class="bi bi-tree info-icon"></i>
+                <div>
+                  <strong>Possui área externa:</strong>
+                  <div class="mt-1"><%= @user.backyard ? "Sim" : "Não" %></div>
+                </div>
+              </div>
+              <div class="info-item">
+                <i class="bi bi-heart info-icon"></i>
+                <div>
+                  <strong>Tem outros animais:</strong>
+                  <div class="mt-1"><%= @user.has_pet ? "Sim" : "Não" %></div>
+                </div>
+              </div>
+              <div class="info-item">
+                <i class="bi bi-shield-check info-icon"></i>
+                <div>
+                  <strong>Janelas teladas:</strong>
+                  <div class="mt-1"><%= @user.screened_windows ? "Sim" : "Não" %></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Photo Gallery -->
+      <% if @user.place_photos.attached? %>
+        <div class="card-modern mt-4">
+          <div class="card-header-modern">
+            <h3 class="h5 mb-0">
+              <i class="bi bi-images me-2"></i>
+              Fotos do Espaço
+            </h3>
+          </div>
+          <div class="card-body-modern">
+            <div class="photo-gallery">
+              <% @user.place_photos.each do |photo| %>
+                <div class="photo-item">
+                  <div class="photo-wrapper">
+                    <%= image_tag url_for(photo),
+                          class: "img-fluid",
+                          data: { bs_toggle: "modal", bs_target: "#photoModal#{photo.id}" } %>
                   </div>
+                  <div class="photo-controls">
+                    <span class="text-muted small">Clique para ampliar</span>
+                  </div>
+                </div>
+              <% end %>
+            </div>
+          </div>
+        </div>
+
+        <!-- Modals -->
+        <% @user.place_photos.each do |photo| %>
+          <div class="modal fade" id="photoModal<%= photo.id %>" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-lg">
+              <div class="modal-content">
+                <div class="modal-body p-0">
+                  <%= image_tag rails_blob_path(photo, disposition: "inline"), class: "img-fluid" %>
+                </div>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      <% end %>
+
+      <!-- Calendar -->
+      <div class="mt-4">
+        <h2 class="section-title">Calendário de Disponibilidade</h2>
+
+        <% availability_by_date = @availabilities.index_by(&:date) %>
+        <% months = [Date.current.beginning_of_month,
+                     (Date.current + 1.month).beginning_of_month,
+                     (Date.current + 2.months).beginning_of_month] %>
+
+        <div class="row g-3">
+          <% months.each do |month_start| %>
+            <% month_end   = month_start.end_of_month %>
+            <% first_wday  = month_start.wday %>
+            <% days_in_mon = (month_start..month_end).to_a %>
+
+            <div class="col-12 col-lg-4">
+              <div class="calendar-container">
+                <div class="calendar-header">
+                  <h4 class="h6 mb-0"><%= I18n.l(month_start, format: "%B de %Y") %></h4>
+                </div>
+
+                <table class="table table-sm mb-0">
+                  <thead class="table-light">
+                    <tr class="text-center">
+                      <th class="py-2 small">D</th><th class="py-2 small">S</th><th class="py-2 small">T</th>
+                      <th class="py-2 small">Q</th><th class="py-2 small">Q</th><th class="py-2 small">S</th><th class="py-2 small">S</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <% first_wday.times do %>
+                        <td class="calendar-cell"><div class="calendar-day"></div></td>
+                      <% end %>
+
+                      <% days_in_mon.each do |day| %>
+                        <% av     = availability_by_date[day] %>
+                        <% booked = av&.booking.present? %>
+                        <% past   = day < Date.current %>
+
+                        <td class="calendar-cell">
+                          <div class="calendar-day">
+                            <div class="day-number"><%= day.day %></div>
+
+                            <% if av.nil? || past %>
+                              <span class="status-badge status-unavailable">—</span>
+
+                            <% elsif booked %>
+                              <% b = av.booking %>
+                              <span class="status-badge status-booked">Reservado</span>
+
+                              <% if user_signed_in? && (current_user == @user || current_user == b.user) %>
+                                <% batch_size = Booking.where(group_token: b.group_token).count if b.group_token.present? %>
+                                <%= button_to "Cancelar",
+                                      availability_booking_path(av, b),
+                                      method: :delete,
+                                      data: { confirm: "Cancelar #{b.group_token.present? && batch_size.to_i > 1 ? 'todas as reservas do período' : 'esta reserva'}?" },
+                                      class: "btn-cancel" %>
+                              <% end %>
+
+                            <% else %>
+                              <span class="status-badge status-available">Livre</span>
+                            <% end %>
+                          </div>
+                        </td>
+
+                        <% if day.wday == 6 && (day != month_end) %>
+                          </tr><tr>
+                        <% end %>
+                      <% end %>
+
+                      <% last_wday = month_end.wday %>
+                      <% (6 - last_wday).times do %>
+                        <td class="calendar-cell"><div class="calendar-day"></div></td>
+                      <% end %>
+                    </tr>
+                  </tbody>
+                </table>
+
+                <div class="p-3 bg-light text-center small">
+                  <span class="status-badge status-available me-2">Livre</span>
+                  <span class="status-badge status-booked">Reservado</span>
                 </div>
               </div>
             </div>
@@ -165,170 +276,87 @@
         </div>
       </div>
     </div>
-  <% end %>
 
-  <!-- Booking Form -->
-  <% if user_signed_in? && current_user != @user %>
-    <div class="booking-form mt-4">
-      <div class="card-header-modern">
-        <div class="d-flex align-items-center justify-content-between">
-          <h3 class="h5 mb-0">
-            <i class="bi bi-calendar-plus me-2"></i>
-            Reservar Período
-          </h3>
-          <span class="badge bg-primary">Múltiplos dias</span>
-        </div>
-      </div>
-      <div class="card-body-modern">
-        <%= form_with url: bulk_create_bookings_path, method: :post, local: true, class: "row g-3" do %>
-          <%= hidden_field_tag :sitter_id, @user.id %>
-
-          <div class="col-12 col-md-3">
-            <%= label_tag :start_date, "Início", class: "form-label fw-semibold" %>
-            <div class="input-group input-group-modern">
-              <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
-              <%= date_field_tag :start_date, nil, min: Date.current, class: "form-control form-control-modern", required: true %>
+    <!-- COLUNA DIREITA (RESERVA FIXA) -->
+    <div class="col-lg-4">
+      <% if user_signed_in? && current_user != @user %>
+        <div class="sticky-reserva">
+          <div class="booking-form mt-4">
+            <div class="card-header-modern">
+              <div class="d-flex align-items-center justify-content-between">
+                <h3 class="h5 mb-0">
+                  <i class="bi bi-calendar-plus me-2"></i>
+                  Reservar Período
+                </h3>
+                <%# <span class="badge bg-primary">Múltiplos dias</span> %>
+              </div>
             </div>
-          </div>
+            <div class="card-body-modern">
+              <%= form_with url: bulk_create_bookings_path, method: :post, local: true, class: "row g-3" do %>
+                <%= hidden_field_tag :sitter_id, @user.id %>
 
-          <div class="col-12 col-md-3">
-            <%= label_tag :end_date, "Término", class: "form-label fw-semibold" %>
-            <div class="input-group input-group-modern">
-              <span class="input-group-text"><i class="bi bi-calendar-check"></i></span>
-              <%= date_field_tag :end_date, nil, min: Date.current, class: "form-control form-control-modern", required: true %>
-            </div>
-          </div>
+                <div class="col-12 col-md-12">
+                  <%= label_tag :start_date, "Início", class: "form-label fw-semibold" %>
+                  <div class="input-group input-group-modern">
+                    <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
+                    <%= date_field_tag :start_date, nil, min: Date.current, class: "form-control form-control-modern", required: true %>
+                  </div>
+                </div>
 
-          <div class="col-12 col-md-3">
-            <%= label_tag :pet_name, "Nome do Pet", class: "form-label fw-semibold" %>
-            <div class="input-group input-group-modern">
-              <span class="input-group-text"><i class="bi bi-paw"></i></span>
-              <%= text_field_tag :pet_name, nil, class: "form-control form-control-modern", required: true %>
-            </div>
-          </div>
+                <div class="col-12 col-md-12">
+                  <%= label_tag :end_date, "Término", class: "form-label fw-semibold" %>
+                  <div class="input-group input-group-modern">
+                    <span class="input-group-text"><i class="bi bi-calendar-check"></i></span>
+                    <%= date_field_tag :end_date, nil, min: Date.current, class: "form-control form-control-modern", required: true %>
+                  </div>
+                </div>
 
-          <div class="col-12 col-md-3">
-            <%= label_tag :animal_type, "Tipo", class: "form-label fw-semibold" %>
-            <%= select_tag :animal_type,
-                  options_for_select([["Cachorro","Cachorro"],["Gato","Gato"],["Coelho","Coelho"],["Pássaro","Pássaro"]]),
-                  class: "form-select form-select-modern", required: true %>
-          </div>
+                <div class="col-12 col-md-12">
+                  <%= label_tag :pet_name, "Nome do Pet", class: "form-label fw-semibold" %>
+                  <div class="input-group input-group-modern">
+                    <span class="input-group-text"><i class="bi bi-paw"></i></span>
+                    <%= text_field_tag :pet_name, nil, class: "form-control form-control-modern", required: true %>
+                  </div>
+                </div>
 
-          <div class="col-12 col-md-3">
-            <%= label_tag :pet_size, "Tamanho", class: "form-label fw-semibold" %>
-            <%= select_tag :pet_size,
-                  options_for_select([["Pequeno","Pequeno"],["Médio","Médio"],["Grande","Grande"]]),
-                  class: "form-select form-select-modern", required: true %>
-          </div>
+                <div class="col-12 col-md-12">
+                  <%= label_tag :animal_type, "Tipo", class: "form-label fw-semibold" %>
+                  <%= select_tag :animal_type,
+                        options_for_select([["Cachorro","Cachorro"],["Gato","Gato"],["Coelho","Coelho"],["Pássaro","Pássaro"]]),
+                        class: "form-select form-select-modern", required: true %>
+                </div>
 
-          <div class="col-12 col-md-3">
-            <%= label_tag :pet_birth_year, "Ano nasc.", class: "form-label fw-semibold" %>
-            <div class="input-group input-group-modern">
-              <span class="input-group-text"><i class="bi bi-cake"></i></span>
-              <%= number_field_tag :pet_birth_year, nil, in: 2000..Date.current.year, class: "form-control form-control-modern", required: true %>
-            </div>
-          </div>
+                <div class="col-12 col-md-12">
+                  <%= label_tag :pet_size, "Tamanho", class: "form-label fw-semibold" %>
+                  <%= select_tag :pet_size,
+                        options_for_select([["Pequeno","Pequeno"],["Médio","Médio"],["Grande","Grande"]]),
+                        class: "form-select form-select-modern", required: true %>
+                </div>
 
-          <div class="col-12">
-            <div class="alert-modern d-flex align-items-center gap-2">
-              <i class="bi bi-info-circle"></i>
-              <div>Reservas serão criadas apenas para <strong>dias livres</strong> dentro do período.</div>
-            </div>
-          </div>
+                <div class="col-12 col-md-12">
+                  <%= label_tag :pet_birth_year, "Ano nasc.", class: "form-label fw-semibold" %>
+                  <div class="input-group input-group-modern">
+                    <span class="input-group-text"><i class="bi bi-cake"></i></span>
+                    <%= number_field_tag :pet_birth_year, nil, in: 2000..Date.current.year, class: "form-control form-control-modern", required: true %>
+                  </div>
+                </div>
 
-          <div class="col-12 d-flex gap-2 pt-1">
-            <%= submit_tag "Reservar período", class: "btn btn-primary-modern" %>
-          </div>
-        <% end %>
-      </div>
-    </div>
-  <% end %>
+                <div class="col-12">
+                  <div class="alert-modern d-flex align-items-center gap-2">
+                    <i class="bi bi-info-circle"></i>
+                    <div>Reservas serão criadas apenas para <strong>dias livres</strong> dentro do período.</div>
+                  </div>
+                </div>
 
-  <!-- Calendar -->
-  <div class="mt-4">
-    <h2 class="section-title">Calendário de Disponibilidade</h2>
-
-    <% availability_by_date = @availabilities.index_by(&:date) %>
-    <% months = [Date.current.beginning_of_month,
-                 (Date.current + 1.month).beginning_of_month,
-                 (Date.current + 2.months).beginning_of_month] %>
-
-    <div class="row g-3">
-      <% months.each do |month_start| %>
-        <% month_end   = month_start.end_of_month %>
-        <% first_wday  = month_start.wday %>
-        <% days_in_mon = (month_start..month_end).to_a %>
-
-        <div class="col-12 col-lg-4">
-          <div class="calendar-container">
-            <div class="calendar-header">
-              <h4 class="h6 mb-0"><%= I18n.l(month_start, format: "%B de %Y") %></h4>
-            </div>
-
-            <table class="table table-sm mb-0">
-              <thead class="table-light">
-                <tr class="text-center">
-                  <th class="py-2 small">D</th><th class="py-2 small">S</th><th class="py-2 small">T</th>
-                  <th class="py-2 small">Q</th><th class="py-2 small">Q</th><th class="py-2 small">S</th><th class="py-2 small">S</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <% first_wday.times do %>
-                    <td class="calendar-cell"><div class="calendar-day"></div></td>
-                  <% end %>
-
-                  <% days_in_mon.each do |day| %>
-                    <% av     = availability_by_date[day] %>
-                    <% booked = av&.booking.present? %>
-                    <% past   = day < Date.current %>
-
-                    <td class="calendar-cell">
-                      <div class="calendar-day">
-                        <div class="day-number"><%= day.day %></div>
-
-                        <% if av.nil? || past %>
-                          <span class="status-badge status-unavailable">—</span>
-
-                        <% elsif booked %>
-                          <% b = av.booking %>
-                          <span class="status-badge status-booked">Reservado</span>
-
-                          <% if user_signed_in? && (current_user == @user || current_user == b.user) %>
-                            <% batch_size = Booking.where(group_token: b.group_token).count if b.group_token.present? %>
-                            <%= button_to (b.group_token.present? && batch_size.to_i > 1 ? "Cancelar" : "Cancelar"),
-                                  availability_booking_path(av, b),
-                                  method: :delete,
-                                  data: { confirm: "Cancelar #{b.group_token.present? && batch_size.to_i > 1 ? 'todas as reservas do período' : 'esta reserva'}?" },
-                                  class: "btn-cancel" %>
-                          <% end %>
-
-                        <% else %>
-                          <span class="status-badge status-available">Livre</span>
-                        <% end %>
-                      </div>
-                    </td>
-
-                    <% if day.wday == 6 && (day != month_end) %>
-                      </tr><tr>
-                    <% end %>
-                  <% end %>
-
-                  <% last_wday = month_end.wday %>
-                  <% (6 - last_wday).times do %>
-                    <td class="calendar-cell"><div class="calendar-day"></div></td>
-                  <% end %>
-                </tr>
-              </tbody>
-            </table>
-
-            <div class="p-3 bg-light text-center small">
-              <span class="status-badge status-available me-2">Livre</span>
-              <span class="status-badge status-booked">Reservado</span>
+                <div class="col-12 d-flex gap-2 pt-1">
+                  <%= submit_tag "Reservar período", class: "btn btn-primary-modern w-100" %>
+                </div>
+              <% end %>
             </div>
           </div>
         </div>
       <% end %>
     </div>
+
   </div>
 </div>
