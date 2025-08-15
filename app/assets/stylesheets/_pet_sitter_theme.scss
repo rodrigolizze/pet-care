@@ -118,3 +118,175 @@ main {
 .icon-indigo  { background: #6366f1; }
 
 /* Keep ps-icon base sizing/shape from earlier theme */
+
+/* Hero section */
+.hero-about {
+  background: radial-gradient(1200px 400px at 50% -10%, rgba(16,185,129,.18), transparent),
+              linear-gradient(180deg, #ecfdf5, #ffffff);
+  border: 1px solid var(--ps-border);
+  box-shadow: 0 12px 30px rgba(16,185,129,.10);
+}
+.hero-badge {
+  width: 3rem; height: 3rem; border-radius: 999px;
+  background: #10b981; color: #fff;
+  box-shadow: 0 0 0 8px rgba(16,185,129,.18);
+  font-size: 1.25rem;
+}
+
+/* Feature icons */
+.feature-icon {
+  display: inline-grid; place-items: center;
+  width: 2.5rem; height: 2.5rem; border-radius: 999px; color: #fff;
+}
+.icon-emerald { background: #10b981; }
+.icon-indigo  { background: #6366f1; }
+.icon-rose    { background: #ef476f; }
+
+/* Card hover */
+.card-hover { transition: transform .15s ease, box-shadow .2s ease; }
+.card-hover:hover { transform: translateY(-2px); box-shadow: 0 14px 28px rgba(15, 23, 42, .08); }
+
+/* Extra soft headers */
+.bg-soft-slate { background: linear-gradient(180deg, #f1f5f9, #ffffff); }
+.pill-slate { background: #64748b; box-shadow: 0 0 0 4px rgba(100,116,139,.15); }
+
+/* Slate chip */
+.chip-slate { background:#e2e8f0; color:#334155; }
+
+/* If you don't have them yet */
+.text-gradient-emerald { background: linear-gradient(90deg,#10b981,#059669); -webkit-background-clip:text; background-clip:text; color:transparent; }
+.bg-soft-emerald { background: linear-gradient(180deg,#ecfdf5,#ffffff); }
+.pill-accent { width:.65rem; height:.65rem; border-radius:999px; }
+.pill-emerald { background:#10b981; box-shadow:0 0 0 4px rgba(16,185,129,.15); }
+.chip-emerald { background:#d1fae5; color:#065f46; }
+
+
+/* Sitters grid tweaks */
+.sitter-photo img { object-fit: cover; }           /* ensure full-bleed image */
+.card-hover { transition: transform .15s ease, box-shadow .2s ease; }
+.card-hover:hover { transform: translateY(-2px); box-shadow: 0 14px 28px rgba(15,23,42,.08); }
+
+/* Indigo heading gradient (if not added yet) */
+.text-gradient-indigo {
+  background: linear-gradient(90deg, #6366f1, #4338ca);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Hero variant for the steps page */
+.hero-how {
+  background: radial-gradient(1100px 380px at 50% -10%, rgba(16,185,129,.16), transparent),
+              linear-gradient(180deg, #ecfdf5, #ffffff);
+  border: 1px solid var(--ps-border);
+  box-shadow: 0 12px 30px rgba(16,185,129,.10);
+}
+
+/* Numbered step badge */
+.step-badge{
+  position: absolute; top: .75rem; left: .75rem;
+  width: 2rem; height: 2rem; border-radius: 999px;
+  display: grid; place-items: center; font-weight: 700; font-size: .9rem; color: #fff;
+  box-shadow: 0 6px 18px rgba(15,23,42,.08);
+}
+.step-emerald { background: #10b981; }
+.step-indigo  { background: #6366f1; }
+.step-rose    { background: #ef476f; }
+
+
+/* Hero – legal */
+.hero-legal{
+  background: radial-gradient(1100px 380px at 50% -10%, rgba(99,102,241,.14), transparent),
+              linear-gradient(180deg, #eef2ff, #ffffff);
+  border: 1px solid var(--ps-border);
+  box-shadow: 0 12px 30px rgba(99,102,241,.10);
+}
+
+/* Readable legal copy */
+.legal-prose p{ margin-bottom:1rem; }
+.legal-prose h3{
+  font-size:1.05rem; margin-top:1.25rem; margin-bottom:.5rem;
+  color: var(--ps-ink);
+}
+.legal-prose ul{ margin:0 0 1rem 1.1rem; }
+
+/* Search strip under navbar */
+.nav-search { /* uses .bg-soft-emerald gradient already in your theme */ }
+.object-fit-cover { object-fit: cover; } /* for avatar image */
+.place-items-center { display:grid; place-items:center; }
+
+/* Navbar polish */
+.navbar-lewagon {
+  background: #fff;
+  border-bottom: 1px solid var(--ps-border);
+  box-shadow: 0 6px 20px rgba(15,23,42,.05);
+}
+.navbar-lewagon .nav-link { color: var(--ps-ink-2); font-weight: 500; }
+.navbar-lewagon .nav-link:hover { color: var(--ps-brand-2); }
+
+/* Search strip look (only appears on home) */
+.nav-search {
+  background: linear-gradient(180deg, #ecfdf5, #ffffff); /* soft emerald */
+  border: 1px solid var(--ps-border);
+  border-radius: 1rem;
+  box-shadow: 0 10px 24px rgba(16,185,129,.08);
+  padding: 1rem 1.25rem;
+}
+.nav-search .form-control {
+  border-color: var(--ps-border);
+  border-radius: .9rem;
+}
+.nav-search .btn.btn-ps {
+  border-radius: 1rem;
+  font-weight: 600;
+  box-shadow: 0 4px 12px rgba(16,185,129,.15);
+}
+
+/* Heading gradient used in the search title */
+.text-gradient-emerald{
+  background: linear-gradient(90deg,#10b981,#059669);
+  -webkit-background-clip:text; background-clip:text; color:transparent;
+}
+
+
+/* Footer */
+.site-footer {
+  background: linear-gradient(180deg, #ffffff, var(--ps-bg));
+  border-top: 1px solid var(--ps-border);
+}
+
+.site-footer .footer-links a {
+  color: var(--ps-ink-2);
+  text-decoration: none;
+  font-size: .95rem;
+  margin: 0 .25rem;
+  padding: .25rem .3rem;
+}
+.site-footer .footer-links a:hover { color: var(--ps-brand-2); }
+
+/* Nice separators without trailing bars */
+.site-footer .footer-links a:not(:last-child)::after {
+  content: "•";
+  margin-left: .5rem;
+  color: #cbd5e1; /* slate-300-ish */
+}
+
+/* Optional: shrink text a touch on very small screens */
+@media (max-width: 380px) {
+  .site-footer .footer-links a { font-size: .9rem; }
+}
+
+
+/* Initial avatar circle for profile header */
+.avatar-initial{
+  width:56px; height:56px; border-radius:999px;
+  display:flex; align-items:center; justify-content:center;
+  background: #f8fafc; border:1px solid var(--ps-border);
+  font-weight:700; color: var(--ps-ink);
+  box-shadow: 0 0 0 6px rgba(16,185,129,.10);
+}
+
+/* Calendar cell sizing */
+.calendar-cell{ height:56px; vertical-align: top; }
+
+

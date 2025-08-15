@@ -1,11 +1,14 @@
-  <footer>
-    <div class="container">
-      <p>© 2025 Pet Care. Todos os direitos reservados.</p>
-      <nav class="d-inline">
-        <%= link_to "Sobre |", about_path, class: "nav-link d-inline" %>
-        <%= link_to "Como funciona |", how_it_works_path, class: "nav-link d-inline" %>
-        <%= link_to "Trabalhe conosco |", work_with_us_path, class: "nav-link d-inline" %>
-        <%= link_to "Política de Privacidade", privacy_path, class: "nav-link d-inline" %>
+<footer class="site-footer" role="contentinfo">
+  <div class="container py-4">
+    <div class="d-flex flex-column flex-md-row align-items-center justify-content-between gap-2">
+      <p class="m-0 text-muted small">© 2025 Pet Care. Todos os direitos reservados.</p>
+
+      <nav class="footer-links" aria-label="Rodapé">
+        <%= link_to "Sobre", about_path %>
+        <%= link_to "Como funciona", how_it_works_path %>
+        <%= link_to "Trabalhe conosco", work_with_us_path %>
+        <%= link_to "Política de Privacidade", privacy_path %>
       </nav>
     </div>
-  </footer>
+  </div>
+</footer>

@@ -1,28 +1,66 @@
-<div class="container py-5" style="max-width: 900px;">
-  <!-- Page Header -->
-  <div class="text-center mb-5">
-    <h1 class="display-6 fw-semibold">Política de Privacidade</h1>
-    <p class="text-muted">Saiba como protegemos e utilizamos as suas informações.</p>
+<div class="container py-5" style="max-width: 960px;">
+  <!-- Hero -->
+  <section class="hero-legal rounded-4 p-4 p-md-5 text-center mb-4">
+    <h1 class="ps-title display-6 m-0 text-gradient-indigo">Política de Privacidade</h1>
+    <p class="text-muted mt-2 mb-0">Saiba como protegemos e utilizamos as suas informações.</p>
+  </section>
+
+  <!-- Content -->
+  <div class="ps-card shadow-sm border-0">
+    <div class="ps-card-header bg-soft-slate">
+      <div class="d-flex align-items-center gap-2">
+        <div class="pill-accent pill-slate"></div>
+        <h2 class="h6 m-0 text-muted">Transparência e segurança</h2>
+      </div>
+      <small class="text-muted d-flex align-items-center gap-1">
+        <i class="bi bi-clock-history"></i>
+        Atualizado em <%= l(Date.current, format: :long) %>
+      </small>
+    </div>
+
+    <div class="card-body p-4">
+      <div class="legal-prose">
+        <p>Seu texto de política de privacidade vai aqui.</p>
+
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget varius tortor.
+          Donec convallis mi vel faucibus malesuada. Vivamus fermentum, metus in feugiat fermentum,
+          justo massa suscipit lacus, nec commodo nunc nunc at elit. Morbi quis turpis ac lacus
+          tincidunt suscipit. Nam ultricies, urna sit amet facilisis volutpat, nibh sapien facilisis
+          libero, a feugiat mauris velit eget purus. Integer at leo non augue varius euismod.
+          Curabitur tincidunt, ligula nec feugiat iaculis, urna orci feugiat turpis, in cursus erat
+          nibh nec est.
+        </p>
+
+        <h3>1. Dados que coletamos</h3>
+        <ul>
+          <li>Informações de conta (nome, e-mail, telefone).</li>
+          <li>Dados de uso do serviço e preferências.</li>
+          <li>Dados de pagamento (processados por provedores terceiros).</li>
+        </ul>
+
+        <h3>2. Como usamos os dados</h3>
+        <ul>
+          <li>Prestar e melhorar os serviços da PetCare.</li>
+          <li>Comunicar atualizações e suporte.</li>
+          <li>Garantir segurança e prevenção a fraudes.</li>
+        </ul>
+
+        <h3>3. Seus direitos</h3>
+        <ul>
+          <li>Acessar, corrigir ou excluir seus dados.</li>
+          <li>Revogar consentimentos quando aplicável.</li>
+          <li>Solicitar portabilidade e informações adicionais.</li>
+        </ul>
+
+        <h3>4. Contato</h3>
+        <p>Em caso de dúvidas, fale com a gente: <%= mail_to "contato@petcare.example" %>.</p>
+      </div>
+    </div>
   </div>
 
-  <!-- Privacy Content -->
-  <div class="card border-0 shadow-sm p-4">
-    <p>
-      Seu texto de política de privacidade vai aqui.
-    </p>
-
-    <p>
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget varius tortor.
-      Donec convallis mi vel faucibus malesuada. Vivamus fermentum, metus in feugiat fermentum,
-      justo massa suscipit lacus, nec commodo nunc nunc at elit. Morbi quis turpis ac lacus tincidunt suscipit.
-      Nam ultricies, urna sit amet facilisis volutpat, nibh sapien facilisis libero, a feugiat mauris velit eget purus.
-      Integer at leo non augue varius euismod. Curabitur tincidunt, ligula nec feugiat iaculis,
-      urna orci feugiat turpis, in cursus erat nibh nec est.
-    </p>
-  </div>
-
-  <!-- Back button -->
-  <div class="mt-4 text-center">
-    <%= link_to "Voltar", root_path, class: "btn btn-outline-primary" %>
+  <!-- Back -->
+  <div class="text-center mt-4">
+    <%= link_to "Voltar", root_path, class: "btn btn-outline-secondary rounded-pill" %>
   </div>
 </div>

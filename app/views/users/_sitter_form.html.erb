@@ -1,64 +1,99 @@
-<h1><%= current_user.sitter? ? "Editar informações do Cuidador" : "Torne-se um Cuidador" %></h1>
-
+<%# Form: become or edit sitter %>
 <%= form_with model: current_user,
-              url: current_user.sitter? ? update_sitter_users_path : become_sitter_users_path,
+              url:  current_user.sitter? ? update_sitter_users_path : become_sitter_users_path,
               method: current_user.sitter? ? :patch : :post,
-              local: true do |f| %>
+              local: true,
+              html: { class: "row g-3" } do |f| %>
 
-  <div class="mb-3">
-    <%= f.label :bio, "Sobre" %>
-    <%= f.text_area :bio, class: "form-control", placeholder: "Fale sobre sua rotina, preferência e cuidados que oferece" %>
-  </div>
-
-  <div class="mb-3">
-    <%= f.label :experience, "Experiência" %>
-    <%= f.text_area :experience, class: "form-control", placeholder: "Inclua certificações, fale sobre sua experiência com pets" %>
-  </div>
-
-  <div class="d-inline-block mb-3">
-    <%= f.label :property_type, "Moro em:" %>
-    <%= f.select :property_type,
-                  options_for_select(
-                    User::PROPERTY_TYPES.map { |p| p == "house" ? ["Casa", p] : ["Apartamento", p] },
-                    current_user.property_type),
-                  include_blank: "Selecione..." %>
-
-    <%= f.label :animal_sizes, "Aceito animais:" %>
-    <%= f.select :animal_sizes,
-                  options_for_select(
-                    User::ANIMAL_SIZES.map { |a|
-                      case a
-                      when "small" then ["Pequeno", a]
-                      when "medium" then ["Médio", a]
-                      when "big" then ["Grande", a]
-                      when "all" then ["Todos", a]
-                      end
-                    },
-                    current_user.animal_sizes),
-                  include_blank: "Selecione..." %>
-  </div>
-
-  <div class="d-flex justify-content-between">
-    <div>
-      <%= f.label :backyard, "Possui área externa" %>
-      <%= f.check_box :backyard %>
+  <%# Error summary %>
+  <% if f.object.errors.any? %>
+    <div class="alert alert-danger w-100">
+      <strong>Por favor, corrija os seguintes campos:</strong>
+      <ul class="mb-0">
+        <% f.object.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
     </div>
-    <div>
-      <%= f.label :has_pet, "Tem animais" %>
-      <%= f.check_box :has_pet %>
-    </div>
-    <div>
-      <%= f.label :screened_windows, "Janelas teladas" %>
-      <%= f.check_box :screened_windows %>
+  <% end %>
+
+  <%# Sobre / Experiência %>
+  <div class="col-12">
+    <%= f.label :bio, "Sobre", class: "form-label fw-semibold" %>
+    <%= f.text_area :bio, class: "form-control", rows: 4,
+            placeholder: "Fale sobre sua rotina, preferências e cuidados que oferece" %>
+  </div>
+
+  <div class="col-12">
+    <%= f.label :experience, "Experiência", class: "form-label fw-semibold" %>
+    <%= f.text_area :experience, class: "form-control", rows: 4,
+            placeholder: "Inclua certificações e sua experiência com pets" %>
+  </div>
+
+  <%# Seletor: Moradia / Porte %>
+  <div class="col-12 col-md-6">
+    <%= f.label :property_type, "Moro em", class: "form-label fw-semibold" %>
+    <div class="input-group">
+      <span class="input-group-text bg-white"><i class="bi bi-house-door"></i></span>
+      <%= f.select :property_type,
+            options_for_select(
+              User::PROPERTY_TYPES.map { |p| [p == "house" ? "Casa" : "Apartamento", p] },
+              current_user.property_type
+            ),
+            { include_blank: "Selecione..." },
+            class: "form-select" %>
     </div>
   </div>
 
-  <br>
+  <div class="col-12 col-md-6">
+    <%= f.label :animal_sizes, "Aceito animais", class: "form-label fw-semibold" %>
+    <% size_labels = { "small" => "Pequeno", "medium" => "Médio", "big" => "Grande", "all" => "Todos" } %>
+    <div class="input-group">
+      <span class="input-group-text bg-white"><i class="bi bi-arrows-fullscreen"></i></span>
+      <%= f.select :animal_sizes,
+            options_for_select(
+              User::ANIMAL_SIZES.map { |a| [size_labels[a], a] },
+              current_user.animal_sizes
+            ),
+            { include_blank: "Selecione..." },
+            class: "form-select" %>
+    </div>
+  </div>
 
-  <div>
-    <button type="submit" class="btn <%= current_user.sitter? ? 'btn-warning' : 'btn-primary' %>">
-      <i class="fa-solid <%= current_user.sitter? ? 'fa-pen' : 'fa-paw' %>"></i>
+  <%# Switches %>
+  <div class="col-12">
+    <div class="row g-3">
+      <div class="col-12 col-md-4">
+        <div class="form-check form-switch">
+          <%= f.check_box :backyard, class: "form-check-input", id: "user_backyard" %>
+          <%= f.label :backyard, "Possui área externa", class: "form-check-label", for: "user_backyard" %>
+        </div>
+      </div>
+
+      <div class="col-12 col-md-4">
+        <div class="form-check form-switch">
+          <%= f.check_box :has_pet, class: "form-check-input", id: "user_has_pet" %>
+          <%= f.label :has_pet, "Tem animais", class: "form-check-label", for: "user_has_pet" %>
+        </div>
+      </div>
+
+      <div class="col-12 col-md-4">
+        <div class="form-check form-switch">
+          <%= f.check_box :screened_windows, class: "form-check-input", id: "user_screened_windows" %>
+          <%= f.label :screened_windows, "Janelas teladas", class: "form-check-label", for: "user_screened_windows" %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <%# Actions %>
+  <div class="col-12 d-flex flex-wrap gap-2 pt-2">
+    <button type="submit" class="btn btn-ps d-inline-flex align-items-center gap-2">
+      <i class="bi <%= current_user.sitter? ? 'bi-pencil-square' : 'bi-paw' %>"></i>
       <%= current_user.sitter? ? "Atualizar informações" : "Torne-se um Cuidador" %>
     </button>
+
+    <%# Optional: a neutral cancel/back link if you want %>
+    <%#= link_to "Cancelar", request.referer || root_path, class: "btn btn-outline-secondary rounded-pill" %>
   </div>
 <% end %>
