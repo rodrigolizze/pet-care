@@ -1,37 +1,45 @@
 <div class="container py-4">
   <div class="d-flex align-items-center justify-content-between mb-3">
     <h1 class="ps-title m-0 text-gradient-indigo">Cuidadores</h1>
-    <%# Opcional: botão de voltar ou filtro %>
-    <%#= link_to "Voltar", root_path, class: "btn btn-outline-secondary rounded-pill btn-sm" %>
   </div>
 
-  <% if @sitters.present? && @sitters.any? %>
+  <% if @sitters.present? %>
     <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 g-3">
       <% @sitters.each do |sitter| %>
-        <% public_id = sitter.try(:photo_public_id).presence || sitter.try(:photo_key).presence || "c5ldsjbxtnqcwksfgsn0" %>
-
         <div class="col">
           <div class="ps-card h-100 border-0 card-hover overflow-hidden">
             <%= link_to user_path(sitter), class: "text-decoration-none text-reset" do %>
+
               <!-- Foto -->
               <div class="position-relative sitter-photo ratio ratio-16x9 bg-light">
-                <%= cl_image_tag(
-                      public_id,
-                      crop: :fill, gravity: :face,
-                      fetch_format: :auto, quality: :auto,
-                      class: "w-100 h-100",
-                      html: { alt: "Foto de #{sitter.name}" }
-                    ) %>
+                <% if sitter.photo.attached? %>
+                  <%= cl_image_tag(
+                        sitter.photo.key,
+                        crop: :fill, gravity: :face,
+                        fetch_format: :auto, quality: :auto,
+                        class: "w-100 h-100",
+                        alt: "Foto de #{sitter.name}"
+                      ) %>
+                <% else %>
+                  <%= cl_image_tag(
+                        "c5ldsjbxtnqcwksfgsn0", # seu public_id default
+                        crop: :fill, gravity: :face,
+                        fetch_format: :auto, quality: :auto,
+                        class: "w-100 h-100",
+                        alt: "Foto de #{sitter.name}"
+                      ) %>
+                <% end %>
 
-                <!-- Selo/etiqueta (decorativo) -->
-                <span class="ps-chip chip-emerald position-absolute top-0 start-0 m-2 d-none d-sm-inline">Disponível</span>
+                <!-- Selo/etiqueta -->
+                <%# <span class="ps-chip chip-emerald position-absolute top-0 start-0 m-2 d-none d-sm-inline">
+                  Disponível
+                </span> %>
               </div>
 
               <!-- Infos -->
               <div class="p-3">
                 <div class="d-flex align-items-center justify-content-between">
                   <h3 class="h6 m-0 ps-title"><%= sitter.name %></h3>
-                  <!-- Ação rápida: ver perfil -->
                   <span class="d-none d-md-inline text-muted small">Ver perfil</span>
                 </div>
                 <div class="text-muted mt-1">
