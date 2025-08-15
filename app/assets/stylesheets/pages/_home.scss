@@ -22,3 +22,34 @@ footer {
   padding: 20px;
   text-align: center;
 }
+
+.sitter-photo {
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  border-radius: 0.5rem;
+}
+
+.sitter-photo img {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+}
+
+.ps-card .p-3 {
+  padding: 0.75rem 0.75rem 0.5rem 0.75rem;
+}
+
+.ps-card .h4 {
+  font-size: 1rem;
+  margin-bottom: 0.25rem;
+}
+
+.ps-card .text-muted {
+  font-size: 0.85rem;
+  margin-top: 0.25rem;
+}
+
+.ps-card .btn-ps {
+  padding: 0.25rem 0.75rem;
+  font-size: 0.85rem;
+}
