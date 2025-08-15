@@ -21,6 +21,7 @@ Rails.application.routes.draw do
       get  "edit_sitter",   to: "users#edit_sitter"
       patch "update_sitter", to: "users#update_sitter"
       
+      delete "remove_place_photo/:id", to: "users#remove_place_photo", as: "remove_place_photo"
     end
   end
 
