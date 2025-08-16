@@ -1,7 +1,7 @@
 <div class="container py-3">
   <div class="row">
 
-    <!-- COLUNA ESQUERDA -->
+    <!-- Left Column -->
     <div class="col-lg-8">
 
       <!-- Flash Messages -->
@@ -189,7 +189,7 @@
       <% end %>
 
       <!-- Calendar -->
-      <div class="mt-4">
+      <!-- <div class="mt-4">
         <h2 class="section-title">Calendário de Disponibilidade</h2>
 
         <% availability_by_date = @availabilities.index_by(&:date) %>
@@ -274,13 +274,16 @@
             </div>
           <% end %>
         </div>
-      </div>
+      </div> -->
     </div>
 
     <!-- COLUNA DIREITA (RESERVA FIXA) -->
     <div class="col-lg-4">
       <% if user_signed_in? && current_user != @user %>
-        <div class="sticky-reserva">
+                  <div class="sticky-reserva">
+                  <script type="application/json" id="available-dates-json">
+            <%= @available_dates.to_json.html_safe %>
+          </script>
           <div class="booking-form mt-4">
             <div class="card-header-modern">
               <div class="d-flex align-items-center justify-content-between">

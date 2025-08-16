@@ -2,13 +2,17 @@ class UsersController < ApplicationController
   before_action :authenticate_user! # ensure only logged-in users can view profiles
   skip_before_action :authenticate_user!, only: [:show]
 
-  def show
-    @user = User.find(params[:id])
-    # Only show future availabilities of this sitter (optional but recommended)
-    @availabilities = @user.availabilities.where("date >= ?", Date.today)
-                           .includes(booking: :user)   # avoid N+1
-                           .order(:date)
-  end
+def show
+  @user = User.find(params[:id])
+  @availabilities = @user.availabilities.where("date >= ?", Date.today)
+                         .includes(booking: :user)
+                         .order(:date)
+
+  # array só com datas livres
+  @available_dates = @availabilities
+                       .select { |a| a.booking.nil? }
+                       .map(&:date)
+end
 
   def become_sitter
     # show the form for extra sitter details
@@ -68,11 +72,11 @@ class UsersController < ApplicationController
   def user_params
     params.require(:user).permit(
       :bio,
-      :experience, 
-      :property_type, 
-      :backyard, 
-      :has_pet, 
-      :screened_windows, 
+      :experience,
+      :property_type,
+      :backyard,
+      :has_pet,
+      :screened_windows,
       :animal_sizes,
       place_photos: []
     )
