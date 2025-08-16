@@ -1,92 +1,43 @@
-<div class="banner" style="background-image: linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.4)), url(<%= asset_path 'banner2.jpeg' %>);">
-  <h1 class=txt-banner><strong>Precisa deixar seu pet com alguém? 
-    <br>
-    Deixa com a gente.</strong>
-  </h1>
-  <div class="container">
-    <%# --- Search block only on the home page (ignores query params) --- %>
-    <% if request.path == root_path %>
-      <div class="container mt-4 search">
-        <div class="row justify-content-center">
-          <div class="col-lg-10">
-            <h1 class="mb-3 ps-title text-gradient-emerald">Encontre um Pet Sitter</h1>
-
-            <%= simple_form_for :search, url: root_path, method: :get, html: { class: 'row g-2 align-items-end' } do |f| %>
-              <div class="col-md-3">
-                <%= f.input :city, label: false, placeholder: "Onde o seu pet ficará?", wrapper: false,
-                            input_html: { value: params.dig(:search, :city), class: 'form-control' } %>
-              </div>
-
-              <div class="col-md-2">
-                <%= f.input :start_date, label: false, wrapper: false, placeholder: "Check-in",
-                            input_html: { type: 'date', value: params.dig(:search, :start_date), class: 'form-control' } %>
-              </div>
-
-              <div class="col-md-2">
-                <%= f.input :end_date, label: false, wrapper: false, placeholder: "Check-out",
-                            input_html: { type: 'date', value: params.dig(:search, :end_date), class: 'form-control' } %>
-              </div>
-
-              <div class="col-md-2">
-                <div class="d-grid h-100">
-                  <%= f.button :submit, "Buscar", class: "btn btn-success h-100" %>
-                </div>
-              </div>
-            <% end %>
-          </div>
-        </div>
-      </div>
-    <% end %>
-  </div>
-</div>
-
-
 <div class="container py-4">
   <div class="d-flex align-items-center justify-content-between mb-3">
     <h1 class="ps-title m-0 text-gradient-indigo">Cuidadores</h1>
+    <%# Opcional: botão de voltar ou filtro %>
+    <%#= link_to "Voltar", root_path, class: "btn btn-outline-secondary rounded-pill btn-sm" %>
   </div>
 
-  <% if @sitters.present? %>
+  <% if @sitters.present? && @sitters.any? %>
     <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 g-3">
       <% @sitters.each do |sitter| %>
+        <% public_id = sitter.try(:photo_public_id).presence || sitter.try(:photo_key).presence || "c5ldsjbxtnqcwksfgsn0" %>
+
         <div class="col">
           <div class="ps-card h-100 border-0 card-hover overflow-hidden">
             <%= link_to user_path(sitter), class: "text-decoration-none text-reset" do %>
-
               <!-- Foto -->
               <div class="position-relative sitter-photo ratio ratio-16x9 bg-light">
-                <% if sitter.photo.attached? %>
-                  <%= cl_image_tag(
-                        sitter.photo.key,
-                        crop: :fill, gravity: :face,
-                        fetch_format: :auto, quality: :auto,
-                        class: "w-100 h-100",
-                        alt: "Foto de #{sitter.name}"
-                      ) %>
-                <% else %>
-                  <%= cl_image_tag(
-                        "c5ldsjbxtnqcwksfgsn0", # seu public_id default
-                        crop: :fill, gravity: :face,
-                        fetch_format: :auto, quality: :auto,
-                        class: "w-100 h-100",
-                        alt: "Foto de #{sitter.name}"
-                      ) %>
-                <% end %>
+                <%= cl_image_tag(
+                      public_id,
+                      crop: :fill, gravity: :face,
+                      fetch_format: :auto, quality: :auto,
+                      class: "w-100 h-100",
+                      html: { alt: "Foto de #{sitter.name}" }
+                    ) %>
 
-                <!-- Selo/etiqueta -->
-                <%# <span class="ps-chip chip-emerald position-absolute top-0 start-0 m-2 d-none d-sm-inline">
-                  Disponível
-                </span> %>
+                <!-- Selo/etiqueta (decorativo) -->
+                <span class="ps-chip chip-emerald position-absolute top-0 start-0 m-2 d-none d-sm-inline">Disponível</span>
               </div>
 
               <!-- Infos -->
               <div class="p-3">
                 <div class="d-flex align-items-center justify-content-between">
-                  <h3 class="h4 m-0 ps-title"><%= sitter.name %></h3>
+                  <h3 class="h6 m-0 ps-title"><%= sitter.name %></h3>
+                  <!-- Ação rápida: ver perfil -->
+                  <span class="d-none d-md-inline text-muted small">Ver perfil</span>
                 </div>
                 <div class="text-muted mt-1">
                   <i class="bi bi-geo-alt me-1"></i>
-                  <%= sitter.address %>
+                  <%= sitter.address %> -
+                  <%= sitter.city %>
                 </div>
               </div>
             <% end %>
