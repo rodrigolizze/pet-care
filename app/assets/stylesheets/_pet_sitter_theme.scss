@@ -211,7 +211,6 @@ main {
 .legal-prose ul{ margin:0 0 1rem 1.1rem; }
 
 /* Search strip under navbar */
-.nav-search { /* uses .bg-soft-emerald gradient already in your theme */ }
 .object-fit-cover { object-fit: cover; } /* for avatar image */
 .place-items-center { display:grid; place-items:center; }
 
@@ -224,23 +223,28 @@ main {
 .navbar-lewagon .nav-link { color: var(--ps-ink-2); font-weight: 500; }
 .navbar-lewagon .nav-link:hover { color: var(--ps-brand-2); }
 
+.search {
+  position: absolute;
+  top: 320px
+}
+
 /* Search strip look (only appears on home) */
-.nav-search {
-  background: linear-gradient(180deg, #ecfdf5, #ffffff); /* soft emerald */
-  border: 1px solid var(--ps-border);
-  border-radius: 1rem;
-  box-shadow: 0 10px 24px rgba(16,185,129,.08);
-  padding: 1rem 1.25rem;
-}
-.nav-search .form-control {
-  border-color: var(--ps-border);
-  border-radius: .9rem;
-}
-.nav-search .btn.btn-ps {
-  border-radius: 1rem;
-  font-weight: 600;
-  box-shadow: 0 4px 12px rgba(16,185,129,.15);
-}
+// .nav-search {
+//   // background: linear-gradient(180deg, #ecfdf5, #ffffff); /* soft emerald */
+//   // border: 1px solid var(--ps-border);
+//   // border-radius: 1rem;
+//   // box-shadow: 0 10px 24px rgba(16,185,129,.08);
+//   // padding: 1rem 1.25rem;
+// }
+// .nav-search .form-control {
+//   border-color: var(--ps-border);
+//   border-radius: .9rem;
+// }
+// .nav-search .btn.btn-ps {
+//   border-radius: 1rem;
+//   font-weight: 600;
+//   box-shadow: 0 4px 12px rgba(16,185,129,.15);
+// }
 
 /* Heading gradient used in the search title */
 .text-gradient-emerald{

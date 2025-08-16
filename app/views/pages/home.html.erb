@@ -1,3 +1,42 @@
+<div class="banner" style="background-image: linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.4)), url(https://raw.githubusercontent.com/lewagon/fullstack-images/master/uikit/background.png);">
+  <div class="container">
+    <%# --- Search block only on the home page (ignores query params) --- %>
+    <% if request.path == root_path %>
+      <div class="container mt-4 search">
+        <div class="row justify-content-center">
+          <div class="col-lg-10">
+            <h1 class="mb-3 ps-title text-gradient-emerald">Encontre um Pet Sitter</h1>
+
+            <%= simple_form_for :search, url: root_path, method: :get, html: { class: 'row g-2 align-items-end' } do |f| %>
+              <div class="col-md-3">
+                <%= f.input :city, label: false, placeholder: "Onde o seu pet ficará?", wrapper: false,
+                            input_html: { value: params.dig(:search, :city), class: 'form-control' } %>
+              </div>
+
+              <div class="col-md-2">
+                <%= f.input :start_date, label: false, wrapper: false, placeholder: "Check-in",
+                            input_html: { type: 'date', value: params.dig(:search, :start_date), class: 'form-control' } %>
+              </div>
+
+              <div class="col-md-2">
+                <%= f.input :end_date, label: false, wrapper: false, placeholder: "Check-out",
+                            input_html: { type: 'date', value: params.dig(:search, :end_date), class: 'form-control' } %>
+              </div>
+
+              <div class="col-md-2">
+                <div class="d-grid h-100">
+                  <%= f.button :submit, "Buscar", class: "btn btn-success h-100" %>
+                </div>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+
 <div class="container py-4">
   <div class="d-flex align-items-center justify-content-between mb-3">
     <h1 class="ps-title m-0 text-gradient-indigo">Cuidadores</h1>
