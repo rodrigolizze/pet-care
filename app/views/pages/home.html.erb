@@ -17,15 +17,25 @@
                             input_html: { value: params.dig(:search, :city), class: 'form-control' } %>
               </div>
 
-              <div class="col-md-2">
-                <%= f.input :start_date, label: false, wrapper: false, placeholder: "Check-in",
-                            input_html: { type: 'date', value: params.dig(:search, :start_date), class: 'form-control' } %>
-              </div>
+<div class="col-md-2">
+  <div class="input-group flatpickr" data-controller="flatpickr" data-wrap="true">
+    <%= f.input :start_date, label: false, wrapper: false,
+                input_html: { type: 'text', class: 'form-control', "data-input": true,
+                              placeholder: "Check-in",
+                              value: params.dig(:search, :start_date) } %>
+    <span class="input-group-text" data-toggle><i class="bi bi-calendar-date"></i></span>
+  </div>
+</div>
 
-              <div class="col-md-2">
-                <%= f.input :end_date, label: false, wrapper: false, placeholder: "Check-out",
-                            input_html: { type: 'date', value: params.dig(:search, :end_date), class: 'form-control' } %>
-              </div>
+<div class="col-md-2">
+  <div class="input-group flatpickr" data-controller="flatpickr" data-wrap="true">
+    <%= f.input :end_date, label: false, wrapper: false,
+                input_html: { type: 'text', class: 'form-control', "data-input": true,
+                              placeholder: "Check-out",
+                              value: params.dig(:search, :end_date) } %>
+    <span class="input-group-text" data-toggle><i class="bi bi-calendar-date"></i></span>
+  </div>
+</div>
 
               <div class="col-md-2">
                 <div class="d-grid h-100">
