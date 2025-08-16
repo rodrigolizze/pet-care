@@ -224,8 +224,14 @@ main {
 .navbar-lewagon .nav-link:hover { color: var(--ps-brand-2); }
 
 .search {
+  border: 1px solid var(--ps-border);
+  border-radius: 1rem;
+  box-shadow: 0 10px 24px rgba(16,185,129,.08);
+  padding: 1rem 1.25rem;
+  background-color: white;
+  opacity: 0.8;
   position: absolute;
-  top: 320px
+  top: 600px
 }
 
 /* Search strip look (only appears on home) */
