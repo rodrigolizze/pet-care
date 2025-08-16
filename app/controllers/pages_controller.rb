@@ -53,7 +53,8 @@ class PagesController < ApplicationController
     @end_date = search_params[:end_date]
 
     sitters = User.where(sitter: true).includes(availabilities: :booking)
-    sitters = sitters.where("address ILIKE ?", "%#{@city}%") if @city.present?
+    sitters = sitters.where("city ILIKE ?", "%#{@city}%") if @city.present?
+
 
     if @start_date.present? && @end_date.present?
       begin
