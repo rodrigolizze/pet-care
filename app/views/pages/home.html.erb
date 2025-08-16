@@ -1,4 +1,8 @@
-<div class="banner" style="background-image: linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.4)), url(https://raw.githubusercontent.com/lewagon/fullstack-images/master/uikit/background.png);">
+<div class="banner" style="background-image: linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.4)), url(<%= asset_path 'banner2.jpeg' %>);">
+  <h1 class=txt-banner><strong>Precisa deixar seu pet com alguém? 
+    <br>
+    Deixa com a gente.</strong>
+  </h1>
   <div class="container">
     <%# --- Search block only on the home page (ignores query params) --- %>
     <% if request.path == root_path %>

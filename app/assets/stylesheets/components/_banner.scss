@@ -1,7 +1,15 @@
 .banner {
   background-size: cover;
-  background-position: center;
+  background-position: 5% 30%;
+  height: 650px;
   padding: 150px 0;
+}
+
+.txt-banner {
+  font-family: 'Courier New', Courier, monospace;
+  color: antiquewhite;
+  position: absolute;
+  left: 330px;
 }
 
 // .banner h1 {
